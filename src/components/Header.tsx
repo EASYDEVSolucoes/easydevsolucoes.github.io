@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { smoothScroll } from "@/utils/smoothScroll";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,12 +16,35 @@ export default function Header() {
     { name: "Contato", href: "#contact" },
   ];
 
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      smoothScroll(href);
+      setIsMenuOpen(false);
+    },
+    []
+  );
+
+  // Lidar com o scroll inicial se houver um hash na URL
+  useEffect(() => {
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      setTimeout(() => {
+        smoothScroll(hash);
+      }, 100);
+    }
+  }, []);
+
   return (
     <header className="bg-white shadow-sm fixed w-full top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="flex">
+            <Link
+              href="/"
+              className="flex"
+              onClick={(e) => handleClick(e, "/")}
+            >
               <span className="sr-only">EasyDev</span>
               <Image
                 src="/company/logoEasyDev.png"
@@ -39,12 +63,17 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
+                onClick={(e) => handleClick(e, item.href)}
                 className="text-base font-medium text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 {item.name}
               </Link>
             ))}
-            <Link href="#contact" className="btn-primary">
+            <Link
+              href="#contact"
+              className="btn-primary"
+              onClick={(e) => handleClick(e, "#contact")}
+            >
               Fale Conosco
             </Link>
           </div>
@@ -75,7 +104,7 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => handleClick(e, item.href)}
                 >
                   {item.name}
                 </Link>
@@ -83,7 +112,7 @@ export default function Header() {
               <Link
                 href="#contact"
                 className="block w-full text-center btn-primary mt-4"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleClick(e, "#contact")}
               >
                 Fale Conosco
               </Link>
