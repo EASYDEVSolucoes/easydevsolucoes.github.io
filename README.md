@@ -63,15 +63,20 @@ easydev.github.io/
 
 Este site está configurado para ser hospedado no GitHub Pages. O deploy é feito automaticamente quando há um push na branch `main`.
 
+### Configuração Inicial do GitHub Pages
+
+1. No repositório do GitHub, vá para Settings > Pages
+2. Em "Source", selecione "GitHub Actions"
+3. Certifique-se de que o repositório tem as seguintes permissões habilitadas em Settings > Actions > General:
+   - Actions permissions: "Allow all actions and reusable workflows"
+   - Workflow permissions: Marque "Read and write permissions"
+
+### Deploy Manual
+
 Para fazer o deploy manualmente:
 
-1. Build o projeto:
-
-```bash
-npm run build
-```
-
-2. Faça o commit das alterações e push para o GitHub:
+1. Faça suas alterações no código
+2. Commit e push para a branch main:
 
 ```bash
 git add .
@@ -79,9 +84,12 @@ git commit -m "Update website"
 git push origin main
 ```
 
+O GitHub Actions irá automaticamente fazer o build e deploy do site para o GitHub Pages.
+
 ## Contato
 
 Para mais informações, entre em contato:
 
-- Email: contato@easydev.com.br
-- Telefone: (11) 99999-9999
+- Email: diogo.coutinho.ads@gmail.com
+- Telefone: (31) 99278-4329
+- Ibirité, MG

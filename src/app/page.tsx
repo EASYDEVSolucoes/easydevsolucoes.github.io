@@ -224,8 +224,8 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">Contato</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>Email: diogo.coutinho.ads@gmail.com</li>
-                <li>Telefone: (11) 99999-9999</li>
-                <li>São Paulo, SP</li>
+                <li>Telefone: (31) 99278-4329</li>
+                <li>Ibirité, MG</li>
               </ul>
             </div>
             <div>
