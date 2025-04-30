@@ -5,6 +5,7 @@ import {
   CpuChipIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
+import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   const services = [
@@ -150,55 +151,7 @@ export default function Home() {
               </p>
             </div>
             <div className="max-w-lg mx-auto">
-              <form className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Nome
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Mensagem
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-                  ></textarea>
-                </div>
-                <div>
-                  <button type="submit" className="w-full btn-primary">
-                    Enviar Mensagem
-                  </button>
-                </div>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </section>
