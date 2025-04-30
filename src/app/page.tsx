@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Header from "@/components/Header";
 import {
@@ -6,8 +8,19 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import ContactForm from "@/components/ContactForm";
+import { useCallback } from "react";
+import { smoothScroll } from "@/utils/smoothScroll";
+import Link from "next/link";
 
 export default function Home() {
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      smoothScroll(href);
+    },
+    []
+  );
+
   const services = [
     {
       title: "Desenvolvimento de Software",
@@ -47,12 +60,20 @@ export default function Home() {
                   objetivos através da tecnologia.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <a href="#contact" className="btn-primary">
+                  <Link
+                    href="#contact"
+                    onClick={(e) => handleClick(e, "#contact")}
+                    className="btn-primary"
+                  >
                     Comece seu projeto
-                  </a>
-                  <a href="#services" className="btn-secondary">
+                  </Link>
+                  <Link
+                    href="#services"
+                    onClick={(e) => handleClick(e, "#services")}
+                    className="btn-secondary"
+                  >
                     Nossos serviços
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="relative h-[400px] w-full">
