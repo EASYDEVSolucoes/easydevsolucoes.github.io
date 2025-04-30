@@ -20,8 +20,8 @@ Website institucional da EasyDev, uma empresa especializada em desenvolvimento d
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/EASYDEVSolucoes/easydev.github.io.git
-cd easydev.github.io
+git clone https://github.com/EASYDEVSolucoes/easydevsolucoes.github.io.git
+cd easydevsolucoes.github.io
 ```
 
 2. Instale as dependências:
@@ -41,7 +41,7 @@ npm run dev
 ## Estrutura do Projeto
 
 ```
-easydev.github.io/
+easydevsolucoes.github.io/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
@@ -50,9 +50,16 @@ easydev.github.io/
 │   └── components/
 │       └── Header.tsx
 ├── public/
-│   └── company/
-│       ├── logoEasyDev.png
-│       └── logoEasyDev_comFundo.png
+│   ├── company/
+│   │   ├── logoEasyDev.png
+│   │   └── logoEasyDev_comFundo.png
+│   └── favicon/
+│       ├── favicon.ico
+│       ├── favicon-16x16.png
+│       ├── favicon-32x32.png
+│       ├── apple-touch-icon.png
+│       ├── android-chrome-192x192.png
+│       └── android-chrome-512x512.png
 ├── package.json
 ├── tsconfig.json
 ├── tailwind.config.js
@@ -85,6 +92,8 @@ git push origin main
 ```
 
 O GitHub Actions irá automaticamente fazer o build e deploy do site para o GitHub Pages.
+
+O site estará disponível em: https://easydevsolucoes.github.io
 
 ## Contato
 
