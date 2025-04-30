@@ -13,12 +13,27 @@ export default function Header() {
     { name: "Início", href: "/" },
     { name: "Serviços", href: "#services" },
     { name: "Sobre", href: "#about" },
+    { name: "Missão", href: "#mission" },
     { name: "Contato", href: "#contact" },
   ];
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       e.preventDefault();
+
+      // Se for o link da página inicial, navega para a página inicial
+      if (href === "/") {
+        window.location.href = "/";
+        return;
+      }
+
+      // Se não estiver na página inicial e o href começar com #, apenas navega para a página inicial
+      if (window.location.pathname !== "/" && href.startsWith("#")) {
+        window.location.href = `/${href}`;
+        return;
+      }
+
+      // Se estiver na página inicial, faz o scroll suave
       smoothScroll(href);
       setIsMenuOpen(false);
     },

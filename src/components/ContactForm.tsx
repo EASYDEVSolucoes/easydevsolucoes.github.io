@@ -38,7 +38,7 @@ export default function ContactForm() {
           from_email: formData.email,
           message: formData.message,
           to_name: "EasyDev",
-          to_email: "diogo.coutinho.ads@gmail.com",
+          to_email: "easydevsolucoes@gmail.com",
         },
         "ThdKb23NVbb_pG0CY" // Sua Public Key do EmailJS
       );
