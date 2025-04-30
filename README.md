@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EasyDev Website
 
-## Getting Started
+Website institucional da EasyDev, uma empresa especializada em desenvolvimento de software e soluções digitais.
 
-First, run the development server:
+## Tecnologias Utilizadas
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Heroicons
+- React
+
+## Requisitos
+
+- Node.js 18.17 ou superior
+- npm 9.6.7 ou superior
+
+## Como Executar
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/EASYDEVSolucoes/easydev.github.io.git
+cd easydev.github.io
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+```
+
+3. Execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura do Projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+easydev.github.io/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   └── components/
+│       └── Header.tsx
+├── public/
+│   └── company/
+│       ├── logoEasyDev.png
+│       └── logoEasyDev_comFundo.png
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+└── postcss.config.js
+```
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+Este site está configurado para ser hospedado no GitHub Pages. O deploy é feito automaticamente quando há um push na branch `main`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para fazer o deploy manualmente:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Build o projeto:
 
-## Deploy on Vercel
+```bash
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Faça o commit das alterações e push para o GitHub:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git add .
+git commit -m "Update website"
+git push origin main
+```
+
+## Contato
+
+Para mais informações, entre em contato:
+
+- Email: contato@easydev.com.br
+- Telefone: (11) 99999-9999
