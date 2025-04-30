@@ -223,7 +223,7 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Contato</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>Email: diogo.coutinho.ads@gmail.com</li>
+                <li>Email: easydevsolucoes@gmail.com</li>
                 <li>Telefone: (31) 99278-4329</li>
                 <li>Ibirité, MG</li>
               </ul>

@@ -99,6 +99,6 @@ O site estará disponível em: https://easydevsolucoes.github.io
 
 Para mais informações, entre em contato:
 
-- Email: diogo.coutinho.ads@gmail.com
+- Email: easydevsolucoes@gmail.com
 - Telefone: (31) 99278-4329
 - Ibirité, MG
