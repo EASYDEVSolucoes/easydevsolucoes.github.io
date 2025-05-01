@@ -254,17 +254,26 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">Redes Sociais</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>
-                  <a href="#" className="hover:text-primary">
+                  <a
+                    href="https://www.linkedin.com/company/easydevsolucoes"
+                    className="hover:text-primary"
+                  >
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary">
+                  <a
+                    href="https://github.com/EASYDEVSolucoes"
+                    className="hover:text-primary"
+                  >
                     GitHub
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary">
+                  <a
+                    href="https://www.instagram.com/easydevsolucoes"
+                    className="hover:text-primary"
+                  >
                     Instagram
                   </a>
                 </li>
