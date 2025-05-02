@@ -14,6 +14,7 @@ export default function Header() {
     { name: "Serviços", href: "#services" },
     { name: "Sobre", href: "#about" },
     { name: "Missão", href: "#mission" },
+    { name: "Parceiros", href: "#partners" },
     { name: "Contato", href: "#contact" },
   ];
 
