@@ -13,11 +13,17 @@ const Hero = () => {
   );
 
   return (
-    <section className="relative bg-gradient-to-b from-white to-gray-50 section-padding">
+    <section
+      className="relative bg-gradient-to-b from-white to-gray-50 section-padding"
+      aria-labelledby="hero-title"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <article>
+            <h1
+              id="hero-title"
+              className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6"
+            >
               Transformando ideias em soluções digitais inovadoras
             </h1>
             <p className="text-lg text-gray-600 mb-8">
@@ -25,11 +31,12 @@ const Hero = () => {
               em TI, ajudando empresas a alcançarem seus objetivos através da
               tecnologia.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <nav className="flex flex-wrap gap-4" aria-label="Ações principais">
               <Link
                 href="#contact"
                 onClick={(e) => handleClick(e, "#contact")}
                 className="btn-primary"
+                aria-label="Iniciar um projeto conosco"
               >
                 Comece seu projeto
               </Link>
@@ -37,20 +44,21 @@ const Hero = () => {
                 href="#services"
                 onClick={(e) => handleClick(e, "#services")}
                 className="btn-secondary"
+                aria-label="Conhecer nossos serviços"
               >
                 Nossos serviços
               </Link>
-            </div>
-          </div>
-          <div className="relative h-[400px] w-full">
+            </nav>
+          </article>
+          <figure className="relative h-[400px] w-full">
             <Image
               src="/company/logoEasyDev.png"
-              alt="EasyDev Solutions"
+              alt="EasyDev Solutions - Logo da empresa"
               fill
               className="object-contain"
               priority
             />
-          </div>
+          </figure>
         </div>
       </div>
     </section>
