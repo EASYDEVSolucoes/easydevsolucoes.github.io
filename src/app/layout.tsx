@@ -611,7 +611,7 @@ export const metadata: Metadata = {
     "collaborative analytics",
     "social analytics",
     "mobile analytics",
-    "criação de aplicativos"
+    "criação de aplicativos",
   ],
   authors: [{ name: "EasyDev Soluções" }],
   creator: "EasyDev Soluções",
@@ -703,6 +703,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        <meta
+          name="google-site-verification"
+          content="BPnXcpPDKavEMiXzQ94uU2dKQIVFX2pnewz4d30hu9g"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
