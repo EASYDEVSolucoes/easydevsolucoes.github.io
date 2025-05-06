@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://easydevsolucoes.github.io/sitemap.xml.txt
+Sitemap: https://easydevsolucoes.github.io/sitemap.xml
