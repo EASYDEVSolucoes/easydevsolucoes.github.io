@@ -31,16 +31,16 @@ export default function ContactForm() {
 
     try {
       const result = await emailjs.send(
-        "service_lh2tcg8", // Seu Service ID do EmailJS
-        "template_1s7m5fs", // Seu Template ID do EmailJS
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           to_name: "EasyDev",
-          to_email: "easydevsolucoes@gmail.com",
+          to_email: "contato@easydevsolucoes.com.br",
         },
-        "ThdKb23NVbb_pG0CY" // Sua Public Key do EmailJS
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
       if (result.status === 200) {

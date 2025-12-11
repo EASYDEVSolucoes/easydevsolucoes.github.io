@@ -93,12 +93,12 @@ git push origin main
 
 O GitHub Actions irá automaticamente fazer o build e deploy do site para o GitHub Pages.
 
-O site estará disponível em: https://easydevsolucoes.github.io
+O site estará disponível em: https://easydevsolucoes.com.br
 
 ## Contato
 
 Para mais informações, entre em contato:
 
-- Email: easydevsolucoes@gmail.com
+- Email: contato@easydevsolucoes.com.br
 - Telefone: (31) 99278-4329
 - Ibirité, MG

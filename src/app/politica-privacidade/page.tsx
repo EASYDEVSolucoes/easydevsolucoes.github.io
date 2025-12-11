@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
               </h2>
               <p>
                 Para questões relacionadas à privacidade de seus dados, entre em
-                contato conosco através do email: easydevsolucoes@gmail.com
+                contato conosco através do email: contato@easydevsolucoes.com.br
               </p>
             </section>
 

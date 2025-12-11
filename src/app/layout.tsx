@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import FacebookPixel from "@/components/FacebookPixel";
+import GoogleTag from "@/components/GoogleTag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -707,6 +709,7 @@ export default function RootLayout({
           name="google-site-verification"
           content="BPnXcpPDKavEMiXzQ94uU2dKQIVFX2pnewz4d30hu9g"
         />
+        <meta name="facebook-domain-verification" content="moh7x4zv3lhhjeqhj9ck8m39i5ehn8" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -728,7 +731,7 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 telephone: "+55-31-99278-4329",
                 contactType: "customer service",
-                email: "easydevsolucoes@gmail.com",
+                email: "contato@easydevsolucoes.com.br",
               },
               sameAs: [
                 "https://www.linkedin.com/company/easydevsolucoes",
@@ -740,6 +743,8 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <FacebookPixel />
+        <GoogleTag />
         {children}
         <WhatsAppButton />
       </body>
