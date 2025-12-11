@@ -1,143 +1,120 @@
 "use client";
 
-import { useState } from "react";
+import {useRef, useState} from "react";
 import emailjs from "@emailjs/browser";
+import {useFacebookPixel} from "@/hooks/useFacebookPixel";
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [status, setStatus] = useState({
-    type: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const formRef = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const { trackFormSubmit, trackContact } = useFacebookPixel();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setStatus({ type: "", message: "" });
+    setLoading(true);
+    setError("");
+    setSuccess(false);
 
     try {
-      const result = await emailjs.send(
+      if (!formRef.current) return;
+
+      await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        {
-          from_name: formData.name,
-          from_email: "contato@easydevsolucoes.com.br",
-          message: formData.message,
-          to_name: "EasyDev",
-          to_email: formData.email,
-        },
+        formRef.current,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      if (result.status === 200) {
-        setStatus({
-          type: "success",
-          message: "Mensagem enviada com sucesso! Retornaremos em breve.",
-        });
-        setFormData({ name: "", email: "", message: "" });
-      }
-    } catch (error) {
-      setStatus({
-        type: "error",
-        message:
-          "Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.",
-      });
+      setSuccess(true);
+      formRef.current.reset();
+      trackFormSubmit("contact_form");
+      trackContact("email");
+    } catch (err) {
+      console.log(err);
+      setError(
+        "Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente."
+      );
+      console.error("Error sending email:", err);
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="name" className="block text-gray-700 mb-2">
+            Nome
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+            placeholder="Seu nome"
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-gray-700 mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+            placeholder="seu@email.com"
+          />
+        </div>
+      </div>
       <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Nome
+        <label htmlFor="subject" className="block text-gray-700 mb-2">
+          Assunto
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
+          name="subject"
+          id="subject"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+          placeholder="Assunto da mensagem"
         />
       </div>
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="message"
-          className="block text-sm font-medium text-gray-700"
-        >
+        <label htmlFor="message" className="block text-gray-700 mb-2">
           Mensagem
         </label>
         <textarea
-          id="message"
           name="message"
-          rows={4}
-          value={formData.message}
-          onChange={handleChange}
+          id="message"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+          rows={6}
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+          placeholder="Sua mensagem"
         ></textarea>
       </div>
-      {status.message && (
-        <div
-          className={`p-4 rounded-md ${
-            status.type === "success"
-              ? "bg-green-50 text-green-800"
-              : "bg-red-50 text-red-800"
-          }`}
-        >
-          {status.message}
-        </div>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {success && (
+        <p className="text-green-500 text-sm">
+          Mensagem enviada com sucesso!
+        </p>
       )}
-      <div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className={`w-full btn-primary ${
-            isSubmitting
-              ? "opacity-75 cursor-not-allowed"
-              : "hover:bg-primary-dark"
-          }`}
-        >
-          {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full btn-primary ${
+          loading
+            ? "opacity-75 cursor-not-allowed"
+            : "hover:bg-primary-dark"
+        }`}
+      >
+        {loading ? "Enviando..." : "Enviar Mensagem"}
+      </button>
     </form>
   );
 }
