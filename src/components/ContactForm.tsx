@@ -35,10 +35,10 @@ export default function ContactForm() {
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
           from_name: formData.name,
-          from_email: formData.email,
+          from_email: "contato@easydevsolucoes.com.br",
           message: formData.message,
           to_name: "EasyDev",
-          to_email: "contato@easydevsolucoes.com.br",
+          to_email: formData.email,
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
