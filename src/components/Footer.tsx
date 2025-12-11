@@ -22,7 +22,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contato</h3>
             <ul className="space-y-2 text-gray-300">
-              <li>Email: easydevsolucoes@gmail.com</li>
+              <li>Email: contato@easydevsolucoes.com.br</li>
               <li>Telefone: (31) 99278-4329</li>
               <li>Ibirité, MG</li>
             </ul>
@@ -65,12 +65,21 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} EasyDev. Todos os direitos
             reservados.
           </p>
-          <Link
-            href="/politica-privacidade"
-            className="text-gray-300 hover:text-primary mt-2 inline-block"
-          >
-            Política de Privacidade
-          </Link>
+          <div className="flex justify-center space-x-4 mt-2">
+            <Link
+              href="/politica-privacidade"
+              className="text-gray-300 hover:text-primary"
+            >
+              Política de Privacidade
+            </Link>
+            <span className="text-gray-500">|</span>
+            <Link
+              href="/termos-de-uso"
+              className="text-gray-300 hover:text-primary"
+            >
+              Termos de Uso
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
