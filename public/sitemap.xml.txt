@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://easydevsolucoes.github.io/</loc>
+    <loc>https://easydevsolucoes.com.br/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/politica-privacidade</loc>
+    <loc>https://easydevsolucoes.com.br/politica-privacidade</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/#services</loc>
+    <loc>https://easydevsolucoes.com.br/#services</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/#about</loc>
+    <loc>https://easydevsolucoes.com.br/#about</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/#mission</loc>
+    <loc>https://easydevsolucoes.com.br/#mission</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/#partners</loc>
+    <loc>https://easydevsolucoes.com.br/#partners</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easydevsolucoes.github.io/#contact</loc>
+    <loc>https://easydevsolucoes.com.br/#contact</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

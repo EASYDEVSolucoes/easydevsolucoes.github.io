@@ -623,14 +623,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://easydevsolucoes.github.io"),
+  metadataBase: new URL("https://easydevsolucoes.com.br"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://easydevsolucoes.github.io",
+    url: "https://easydevsolucoes.com.br",
     title: "EasyDev - Soluções Digitais",
     description:
       "Transformando ideias em soluções digitais inovadoras. Especialistas em desenvolvimento de software e consultoria em TI.",
@@ -717,7 +717,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "EasyDev Soluções",
-              url: "https://easydevsolucoes.github.io",
+              url: "https://easydevsolucoes.com.br",
               logo: "https://easydevsolucoes.github.io/company/logoEasyDev.png",
               description:
                 "Transformando ideias em soluções digitais inovadoras. Especialistas em desenvolvimento de software e consultoria em TI.",
