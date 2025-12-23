@@ -1,4 +1,20 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Termos de Uso",
+  description:
+    "Termos de Uso da EasyDev Solucoes. Leia os termos e condicoes para utilizacao do nosso site e servicos.",
+  alternates: {
+    canonical: "/termos-de-uso",
+  },
+  openGraph: {
+    title: "Termos de Uso | EasyDev",
+    description:
+      "Termos de Uso da EasyDev Solucoes. Leia os termos e condicoes para utilizacao do nosso site e servicos.",
+    url: "https://easydevsolucoes.com.br/termos-de-uso",
+  },
+};
 
 export default function TermsOfUse() {
   return (

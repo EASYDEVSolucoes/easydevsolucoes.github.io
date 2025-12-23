@@ -1,4 +1,20 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Politica de Privacidade",
+  description:
+    "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
+  alternates: {
+    canonical: "/politica-privacidade",
+  },
+  openGraph: {
+    title: "Politica de Privacidade | EasyDev",
+    description:
+      "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
+    url: "https://easydevsolucoes.com.br/politica-privacidade",
+  },
+};
 
 export default function PrivacyPolicy() {
   return (
