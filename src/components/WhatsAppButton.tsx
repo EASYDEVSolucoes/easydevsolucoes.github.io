@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {useFacebookPixel} from "@/hooks/useFacebookPixel";
 
 export default function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
   const phoneNumber = "31992784329"; // Seu número de telefone
   const message = "Olá! Gostaria de saber mais sobre os serviços da EasyDev."; // Mensagem padrão
+  const { trackWhatsAppClick } = useFacebookPixel();
 
   // Controla a visibilidade do botão baseado no scroll
   useEffect(() => {
@@ -23,6 +25,7 @@ export default function WhatsAppButton() {
   }, []);
 
   const handleClick = () => {
+    trackWhatsAppClick();
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
