@@ -4,6 +4,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import FacebookPixel from "@/components/FacebookPixel";
 import GoogleTag from "@/components/GoogleTag";
+import ScrollTracker from "@/components/ScrollTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -745,6 +746,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <FacebookPixel />
         <GoogleTag />
+        <ScrollTracker />
         {children}
         <WhatsAppButton />
       </body>
