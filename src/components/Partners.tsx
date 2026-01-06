@@ -20,6 +20,18 @@ const Partners = () => {
               />
             </a>
           </div>
+          <div className="flex justify-center items-center gap-8 flex-wrap">
+            <a href="https://kennygalmeida.com.br/" target="_blank">
+              <Image
+                src="https://kennygalmeida.com.br/kennylogo.png"
+                alt="Kenny Almeida Lab Logo"
+                width={350}
+                height={196}
+                className="object-contain"
+                priority
+              />
+            </a>
+          </div>
         </div>
       </div>
     </section>
