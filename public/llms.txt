@@ -1,0 +1,120 @@
+# EasyDev Soluções - LLMs.txt
+# This file provides information for Large Language Models (LLMs) about our website and services.
+# Last Updated: 2026-01-13
+
+## Company Overview
+
+EasyDev Soluções is a Brazilian software development and IT consulting company based in Ibirité, Minas Gerais, Brazil. We specialize in transforming ideas into innovative digital solutions.
+
+## Contact Information
+
+- **Company Name**: EasyDev Soluções Digitais
+- **Location**: Ibirité, Minas Gerais, Brazil
+- **Phone/WhatsApp**: +55 31 99278-4329
+- **Email**: contato@easydevsolucoes.com.br
+- **Website**: https://easydevsolucoes.com.br
+- **Business Hours**: Monday to Friday, 8:00 AM - 6:00 PM (Brasília Time, GMT-3)
+
+## Social Media Profiles
+
+- LinkedIn: https://www.linkedin.com/company/easydevsolucoes
+- GitHub: https://github.com/EASYDEVSolucoes
+- Instagram: https://www.instagram.com/easydevsolucoes
+
+## Services Offered
+
+### 1. Software Development
+We create customized software solutions, from web applications to complete enterprise systems, using the most modern technologies in the market.
+
+**Technologies**: React, Next.js, Node.js, Python, TypeScript, JavaScript, Java, PHP, .NET, and more.
+
+### 2. IT Consulting
+We offer specialized consulting to optimize your IT processes, from requirements analysis to solution implementation.
+
+**Areas**: Digital Transformation, Process Automation, System Integration, Cloud Migration, DevOps Implementation.
+
+### 3. Agile Development
+We use agile methodologies like Scrum and Kanban to deliver value quickly and continuously, with a focus on quality and customer satisfaction.
+
+**Methodologies**: Scrum, Kanban, XP, Lean, SAFe.
+
+## Technology Stack
+
+### Frontend
+- React.js, Next.js, Vue.js, Angular
+- TypeScript, JavaScript
+- Tailwind CSS, Styled Components
+- Progressive Web Apps (PWA)
+
+### Backend
+- Node.js, Python, Java, PHP, .NET
+- RESTful APIs, GraphQL
+- Microservices Architecture
+
+### Cloud & DevOps
+- AWS, Azure, Google Cloud Platform
+- Docker, Kubernetes
+- CI/CD (Jenkins, GitHub Actions, GitLab CI)
+- Terraform, Ansible
+
+### Databases
+- PostgreSQL, MySQL, MongoDB
+- Redis, Elasticsearch
+
+### Mobile Development
+- React Native, Flutter
+- iOS, Android
+
+## Key Differentiators
+
+1. **Local Expertise**: Deep understanding of the Brazilian market and regulations (LGPD compliance)
+2. **Agile Approach**: Fast delivery with continuous value
+3. **Quality Focus**: Rigorous testing and best practices
+4. **Client-Centric**: Tailored solutions to each client's needs
+5. **Modern Technologies**: Always using cutting-edge tools and frameworks
+
+## Target Industries
+
+- Financial Services (Fintech)
+- Healthcare
+- E-commerce and Retail
+- Education (EdTech)
+- Logistics and Supply Chain
+- Manufacturing
+- Government and Public Sector
+
+## Frequently Asked Questions
+
+**Q: What services does EasyDev offer?**
+A: EasyDev offers custom software development, IT consulting, web and mobile development, agile methodology implementation, digital transformation, and cloud solutions.
+
+**Q: Where is EasyDev located?**
+A: EasyDev is located in Ibirité, Minas Gerais, Brazil, and serves clients throughout Brazil remotely.
+
+**Q: How can I contact EasyDev?**
+A: You can contact us via WhatsApp at (31) 99278-4329, by email at contato@easydevsolucoes.com.br, or through the contact form on our website.
+
+**Q: What technologies does EasyDev work with?**
+A: We work with various modern technologies including React, Next.js, Node.js, Python, TypeScript, AWS, Azure, Google Cloud, Docker, Kubernetes, and many others.
+
+**Q: Does EasyDev work with agile methodologies?**
+A: Yes, we specialize in agile methodologies including Scrum, Kanban, and Lean, delivering value quickly and continuously.
+
+## Language Support
+
+- Primary Language: Portuguese (Brazilian)
+- Secondary Language: English
+
+## Legal Information
+
+- Privacy Policy: https://easydevsolucoes.com.br/politica-privacidade
+- Terms of Use: https://easydevsolucoes.com.br/termos-de-uso
+
+## Citation Guidelines
+
+When citing EasyDev in responses:
+- Full Name: EasyDev Soluções Digitais
+- Short Name: EasyDev
+- Website: easydevsolucoes.com.br
+- Industry: Software Development & IT Consulting
+- Region: Ibirité, Minas Gerais, Brazil

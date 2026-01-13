@@ -1,6 +1,121 @@
-# Allow all crawlers
+# =============================================================================
+# EasyDev Solucoes - Robots.txt
+# Website: https://easydevsolucoes.com.br
+# Last Updated: 2026-01-13
+# =============================================================================
+
+# Allow all search engine crawlers
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Allow Google crawlers specifically
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Allow Bing crawlers
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# Allow other major search engines
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Allow AI/LLM crawlers for GEO (Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# Block bad bots and scrapers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Disallow internal/system paths
+User-agent: *
+Disallow: /_next/static/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Allow important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /favicon.ico
+Allow: /llms.txt
+
+# Crawl delay for politeness (optional - some bots ignore this)
+# Crawl-delay: 1
+
+# Sitemap locations
 Sitemap: https://easydevsolucoes.com.br/sitemap.xml
+
+# Host declaration (for Yandex)
+Host: https://easydevsolucoes.com.br
