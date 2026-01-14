@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   description:
     "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
   alternates: {
-    canonical: "/politica-privacidade",
+    canonical: "/politica-privacidade/",
   },
   openGraph: {
     title: "Politica de Privacidade | EasyDev",
     description:
       "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
-    url: "https://easydevsolucoes.com.br/politica-privacidade",
+    url: "https://easydevsolucoes.com.br/politica-privacidade/",
   },
 };
 
