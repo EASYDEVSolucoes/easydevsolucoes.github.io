@@ -5,9 +5,19 @@ import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useCallback, useState, useEffect } from "react";
 import { smoothScroll } from "@/utils/smoothScroll";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navigation = [
     { name: "Início", href: "/" },
@@ -22,7 +32,6 @@ export default function Header() {
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       e.preventDefault();
 
-      // Se for o link da página inicial, navega para a página inicial
       if (href === "/") {
         window.location.href = "/";
         return;
@@ -52,13 +61,18 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white shadow-sm fixed w-full top-0 z-50">
+    <header
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${scrolled
+          ? "glass py-2 border-b border-white/20 shadow-lg"
+          : "bg-transparent py-4"
+        }`}
+    >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link
               href="/"
-              className="flex"
+              className="flex items-center gap-2 group"
               onClick={(e) => handleClick(e, "/")}
             >
               <span className="sr-only">EasyDev</span>
@@ -67,38 +81,38 @@ export default function Header() {
                 alt="EasyDev Logo"
                 width={80}
                 height={80}
-                className="h-14 w-auto"
+                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
                 priority
               />
             </Link>
           </div>
 
-          {/* Desktop navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden md:flex md:items-center md:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleClick(e, item.href)}
-                className="text-base font-medium text-gray-700 hover:text-primary transition-colors duration-200"
+                className={`text-sm font-bold tracking-wide transition-all duration-200 relative group py-1 ${scrolled ? "text-gray-900" : "text-gray-900" // Always dark/readable on transparent or glass
+                  }`}
               >
                 {item.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
             <Link
               href="#contact"
-              className="btn-primary"
+              className="btn-primary py-2 px-6 text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5"
               onClick={(e) => handleClick(e, "#contact")}
             >
               Fale Conosco
             </Link>
           </div>
 
-          {/* Mobile menu button */}
           <div className="flex md:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+              className="inline-flex items-center justify-center rounded-lg p-2 text-gray-700 hover:bg-gray-100/50 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="sr-only">Abrir menu principal</span>
@@ -111,30 +125,39 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-                  onClick={(e) => handleClick(e, item.href)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <Link
-                href="#contact"
-                className="block w-full text-center btn-primary mt-4"
-                onClick={(e) => handleClick(e, "#contact")}
-              >
-                Fale Conosco
-              </Link>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, scale: 0.95 }}
+              animate={{ opacity: 1, height: "auto", scale: 1 }}
+              exit={{ opacity: 0, height: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-xl rounded-2xl mt-4 shadow-2xl border border-white/20 ring-1 ring-black/5"
+            >
+              <div className="space-y-1 px-4 py-6">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block rounded-xl px-4 py-3 text-base font-bold text-gray-700 hover:bg-primary/5 hover:text-primary transition-all"
+                    onClick={(e) => handleClick(e, item.href)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <div className="pt-4 px-2">
+                  <Link
+                    href="#contact"
+                    className="block w-full text-center btn-primary"
+                    onClick={(e) => handleClick(e, "#contact")}
+                  >
+                    Fale Conosco
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </header>
   );
