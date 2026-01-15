@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Termos de Uso",
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 export default function TermsOfUse() {
   return (
     <>
-      <Header />
-      <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <Navbar />
+      <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
             Termos de Uso

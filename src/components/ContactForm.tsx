@@ -1,8 +1,8 @@
 "use client";
 
-import {useRef, useState} from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import {useFacebookPixel} from "@/hooks/useFacebookPixel";
+import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 
 export default function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -54,12 +54,12 @@ export default function ContactForm() {
             name="name"
             id="name"
             required
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-colors duration-200"
             placeholder="Seu nome"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-gray-700 mb-2">
+          <label htmlFor="email" className="block text-gray-700 mb-2 font-medium">
             Email
           </label>
           <input
@@ -67,13 +67,13 @@ export default function ContactForm() {
             name="email"
             id="email"
             required
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-colors duration-200"
             placeholder="seu@email.com"
           />
         </div>
       </div>
       <div>
-        <label htmlFor="subject" className="block text-gray-700 mb-2">
+        <label htmlFor="subject" className="block text-gray-700 mb-2 font-medium">
           Assunto
         </label>
         <input
@@ -81,12 +81,12 @@ export default function ContactForm() {
           name="subject"
           id="subject"
           required
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-colors duration-200"
           placeholder="Assunto da mensagem"
         />
       </div>
       <div>
-        <label htmlFor="message" className="block text-gray-700 mb-2">
+        <label htmlFor="message" className="block text-gray-700 mb-2 font-medium">
           Mensagem
         </label>
         <textarea
@@ -94,7 +94,7 @@ export default function ContactForm() {
           id="message"
           required
           rows={6}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#EF233C] focus:ring-2 focus:ring-[#EF233C] focus:ring-opacity-50"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-colors duration-200"
           placeholder="Sua mensagem"
         ></textarea>
       </div>
@@ -107,11 +107,10 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className={`w-full btn-primary ${
-          loading
+        className={`w-full btn-primary ${loading
             ? "opacity-75 cursor-not-allowed"
             : "hover:bg-primary-dark"
-        }`}
+          }`}
       >
         {loading ? "Enviando..." : "Enviar Mensagem"}
       </button>
