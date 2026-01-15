@@ -15,12 +15,39 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center bg-gray-50 overflow-hidden"
+      className="relative min-h-[90vh] flex items-center bg-gray-50 overflow-hidden pt-28 lg:pt-40"
       aria-labelledby="hero-title"
     >
       {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-primary/10 to-transparent blur-3xl opacity-50 rounded-full" />
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr from-accent/10 to-transparent blur-3xl opacity-50 rounded-full" />
+      <motion.div
+        className="absolute top-0 right-0 -z-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+          x: [0, 50, 0],
+          y: [0, -30, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl opacity-50"
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.3, 0.6, 0.3],
+          x: [0, -30, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 py-12 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">

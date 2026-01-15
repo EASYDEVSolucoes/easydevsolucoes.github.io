@@ -23,8 +23,13 @@ const Mission = () => {
           </header>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-4" role="list">
-          <ScrollReveal delay={0} width="100%" className="h-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-4 " role="list">
+          <ScrollReveal
+            delay={0}
+            width="100%"
+            className="h-full sticky md:static z-10"
+            style={{ top: "6rem" }}
+          >
             <article
               className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2 h-full flex flex-col"
               role="listitem"
@@ -40,7 +45,12 @@ const Mission = () => {
             </article>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.1} width="100%" className="h-full">
+          <ScrollReveal
+            delay={0.1}
+            width="100%"
+            className="h-full sticky md:static z-20"
+            style={{ top: "7rem" }}
+          >
             <article
               className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2 h-full flex flex-col"
               role="listitem"
@@ -70,7 +80,12 @@ const Mission = () => {
             </article>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.2} width="100%" className="h-full">
+          <ScrollReveal
+            delay={0.2}
+            width="100%"
+            className="h-full sticky md:static z-30"
+            style={{ top: "8rem" }}
+          >
             <article
               className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2 h-full flex flex-col"
               role="listitem"

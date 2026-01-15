@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary text-white border-t border-gray-900 relative overflow-hidden">
+    <footer className="bg-secondary text-white border-t border-gray-900 relative overflow-hidden pb-24">
       {/* Decorative gradient blob */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-50"></div>
       <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full pointer-events-none"></div>
@@ -81,15 +81,17 @@ const Footer = () => {
           <div className="flex justify-center space-x-6 mt-4">
             <Link
               href="/politica-privacidade"
-              className="text-gray-500 hover:text-primary transition-colors"
+              className="text-gray-500 hover:text-primary transition-colors relative group"
             >
               Política de Privacidade
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="/termos-de-uso"
-              className="text-gray-500 hover:text-primary transition-colors"
+              className="text-gray-500 hover:text-primary transition-colors relative group"
             >
               Termos de Uso
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
             </Link>
           </div>
         </div>

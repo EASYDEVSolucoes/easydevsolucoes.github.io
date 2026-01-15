@@ -57,11 +57,20 @@ const Services = () => {
         </ScrollReveal>
 
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-4 px-2 sm:px-0"
           role="list"
         >
           {services.map((service, index) => (
-            <ScrollReveal key={index} delay={index * 0.1} width="100%" className="h-full">
+            <ScrollReveal
+              key={index}
+              delay={index * 0.1}
+              width="100%"
+              className="h-full sticky md:static"
+              style={{
+                top: `${6 + index * 1}rem`,
+                zIndex: 10 + index
+              }}
+            >
               <article
                 className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2 h-full flex flex-col"
                 role="listitem"
