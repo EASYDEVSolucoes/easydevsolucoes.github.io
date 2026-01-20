@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
+import { useGoogleTag } from "@/hooks/useGoogleTag";
 
 export default function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -10,6 +11,7 @@ export default function ContactForm() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const { trackFormSubmit, trackContact } = useFacebookPixel();
+  const { trackFormSubmit: trackGoogleForm, trackContact: trackGoogleContact } = useGoogleTag();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +33,8 @@ export default function ContactForm() {
       formRef.current.reset();
       trackFormSubmit("contact_form");
       trackContact("email");
+      trackGoogleForm("contact_form");
+      trackGoogleContact("email");
     } catch (err) {
       console.log(err);
       setError(
@@ -108,8 +112,8 @@ export default function ContactForm() {
         type="submit"
         disabled={loading}
         className={`w-full btn-primary ${loading
-            ? "opacity-75 cursor-not-allowed"
-            : "hover:bg-primary-dark"
+          ? "opacity-75 cursor-not-allowed"
+          : "hover:bg-primary-dark"
           }`}
       >
         {loading ? "Enviando..." : "Enviar Mensagem"}
