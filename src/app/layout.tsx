@@ -5,6 +5,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import FacebookPixel from "@/components/FacebookPixel";
 import GoogleTag from "@/components/GoogleTag";
 import ScrollTracker from "@/components/ScrollTracker";
+import DomainRedirect from "@/components/DomainRedirect";
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -709,6 +711,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${outfit.variable}`}>
+      <DomainRedirect />
       <head>
         {/* Search Engine Verification Tags */}
         <meta
