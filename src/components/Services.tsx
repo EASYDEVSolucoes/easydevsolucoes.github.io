@@ -62,7 +62,7 @@ const Services = () => {
         >
           {services.map((service, index) => (
             <ScrollReveal
-              key={index}
+              key={service.title}
               delay={index * 0.1}
               width="100%"
               className="h-full sticky md:static"

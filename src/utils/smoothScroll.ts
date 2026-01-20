@@ -18,7 +18,7 @@ export const smoothScroll = (href: string) => {
       const headerOffset = 80; // Altura do header
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition =
-        elementPosition + window.pageYOffset - headerOffset;
+        elementPosition + window.scrollY - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
