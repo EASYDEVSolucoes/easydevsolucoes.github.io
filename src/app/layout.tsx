@@ -629,7 +629,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://easydevsolucoes.com.br"),
   alternates: {
-    canonical: "/",
+    canonical: "https://easydevsolucoes.com.br",
   },
   openGraph: {
     type: "website",
@@ -713,6 +713,12 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${inter.variable} ${outfit.variable}`}>
       <DomainRedirect />
       <head>
+        {/* Redirect for GitHub Pages (Legacy Domain) - Satisfies Google Change of Address */}
+        {process.env.NEXT_PUBLIC_IS_LEGACY_DOMAIN && (
+          <meta http-equiv="refresh" content="0;url=https://easydevsolucoes.com.br/" />
+        )}
+        <link rel="canonical" href="https://easydevsolucoes.com.br" />
+
         {/* Search Engine Verification Tags */}
         <meta
           name="google-site-verification"
