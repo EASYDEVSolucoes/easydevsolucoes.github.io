@@ -99,9 +99,6 @@ const Hero = () => {
           </motion.article>
 
           <motion.figure
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="relative h-[400px] sm:h-[500px] lg:h-[600px] w-full flex items-center justify-center"
           >
             <motion.div
