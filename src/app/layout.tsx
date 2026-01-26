@@ -217,7 +217,8 @@ export default function RootLayout({
               sameAs: [
                 "https://www.instagram.com/easydevsolucoes/",
                 "https://www.linkedin.com/company/easydev-solucoes/",
-                "https://github.com/easydevsolucoes"
+                "https://github.com/easydevsolucoes",
+                "https://www.facebook.com/profile.php?id=100077274026710"
               ],
               contactPoint: [
                 {

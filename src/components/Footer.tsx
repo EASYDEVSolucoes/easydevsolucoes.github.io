@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaInstagram, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -69,6 +69,15 @@ const Footer = () => {
                 aria-label="Instagram"
               >
                 <FaInstagram className="w-6 h-6" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=100077274026710"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/5 p-3 rounded-full text-gray-300 hover:text-white hover:bg-primary transition-all duration-300 hover:-translate-y-1"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="w-6 h-6" />
               </a>
             </div>
           </div>

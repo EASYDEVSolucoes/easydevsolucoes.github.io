@@ -38,9 +38,9 @@ const Hero = () => {
             </div>
             <h1
               id="hero-title"
-              className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-[1.1]"
+              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-[1.1]"
             >
-              Desenvolvimento de <br />
+              Desenvolvimento de <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">
                 Software
               </span>{" "}
