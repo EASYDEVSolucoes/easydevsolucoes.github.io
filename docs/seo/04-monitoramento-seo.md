@@ -285,7 +285,7 @@ Resumo final.
 
 Já implementado no EasyDev:
 - Organization
-- LocalBusiness
+- ProfessionalService
 - WebSite
 - Service
 - FAQPage
@@ -473,7 +473,7 @@ Criado para o EasyDev em `/public/llms.txt` com informações estruturadas para 
 - [ ] Google Business verificado
 - [ ] Avaliações sendo gerenciadas
 - [ ] Área de atendimento definida
-- [ ] Schema LocalBusiness
+- [ ] Schema ProfessionalService
 
 ---
 

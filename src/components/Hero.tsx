@@ -40,11 +40,11 @@ const Hero = () => {
               id="hero-title"
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-[1.1]"
             >
-              Transformando <br />
+              Desenvolvimento de <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">
-                ideias
+                Software
               </span>{" "}
-              em soluções digitais.
+              e Apps sob medida.
             </h1>
             <p className="text-lg sm:text-x text-gray-600 mb-8 leading-relaxed max-w-lg">
               Somos especialistas em desenvolvimento de software e consultoria em

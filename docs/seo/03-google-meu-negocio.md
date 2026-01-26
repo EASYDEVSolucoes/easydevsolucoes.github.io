@@ -425,7 +425,7 @@ Mantenha Nome, Endereço e Telefone idênticos em:
 
 ### 5. Integração com site
 
-- Adicione Schema LocalBusiness (já feito)
+- Adicione Schema ProfessionalService (já feito)
 - Inclua mapa do Google no site
 - Link para perfil do Google
 

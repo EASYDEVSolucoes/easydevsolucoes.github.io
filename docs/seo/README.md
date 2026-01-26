@@ -31,7 +31,7 @@ Esta documentação contém guias completos e atualizados para otimização de S
 - [x] Canonical URLs em todas as páginas
 - [x] Hierarquia de headings correta
 - [x] Alt text em imagens
-- [x] Schema.org completo (Organization, LocalBusiness, WebSite, Service, FAQ, Breadcrumb)
+- [x] Schema.org completo (Organization, ProfessionalService, WebSite, Service, FAQ, Breadcrumb)
 
 #### Técnico
 - [x] HTTPS habilitado
@@ -51,7 +51,7 @@ Esta documentação contém guias completos e atualizados para otimização de S
 - [x] Facebook Pixel
 
 #### Local SEO
-- [x] LocalBusiness Schema
+- [x] ProfessionalService Schema
 - [x] Geo meta tags
 - [ ] Google Business Profile (configurar manualmente)
 
