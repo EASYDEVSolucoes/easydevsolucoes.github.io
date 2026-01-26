@@ -87,6 +87,7 @@ const Hero = () => {
                 src="/company/logoEasyDev.png"
                 alt="EasyDev Solutions - Logo da empresa"
                 fill
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 600px"
                 className="object-contain drop-shadow-2xl"
                 priority
               />

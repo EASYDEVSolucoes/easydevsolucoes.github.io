@@ -1,15 +1,18 @@
 
 
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import About from "@/components/About";
-import Mission from "@/components/Mission";
-import Partners from "@/components/Partners";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import Process from "@/components/Process";
-import Testimonials from "@/components/Testimonials";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+// Lazy load below-the-fold components
+const Services = dynamic(() => import("@/components/Services"), { ssr: true });
+const About = dynamic(() => import("@/components/About"), { ssr: true });
+const Mission = dynamic(() => import("@/components/Mission"), { ssr: true });
+const Partners = dynamic(() => import("@/components/Partners"), { ssr: true });
+const Contact = dynamic(() => import("@/components/Contact"), { ssr: true });
+const Process = dynamic(() => import("@/components/Process"), { ssr: true });
+const Testimonials = dynamic(() => import("@/components/Testimonials"), { ssr: true });
 
 export default function Home() {
   return (
