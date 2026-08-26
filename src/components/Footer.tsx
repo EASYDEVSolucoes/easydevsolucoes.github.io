@@ -87,6 +87,7 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} EasyDev Soluções. Todos os direitos
             reservados.
           </p>
+          <p className="mt-2">CNPJ: 34.534.858/0001-58</p>
           <div className="flex justify-center space-x-6 mt-4">
             <Link
               href="/politica-privacidade"
