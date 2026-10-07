@@ -1,16 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { type Consent, onConsentChange, readConsent } from "@/lib/consent";
 
-/** Escolha de cookies da pessoa: "granted", "denied" ou null enquanto não escolheu. */
-export function useConsent(): Consent | null {
-  const [consent, setConsent] = useState<Consent | null>(null);
+function subscribe(callback: () => void): () => void {
+  const stop = onConsentChange(callback);
+  // escolha feita em outra aba do navegador
+  window.addEventListener("storage", callback);
+  return () => {
+    stop();
+    window.removeEventListener("storage", callback);
+  };
+}
 
-  useEffect(() => {
-    setConsent(readConsent());
-    return onConsentChange(setConsent);
-  }, []);
-
-  return consent;
+/**
+ * Escolha de cookies da pessoa:
+ * - "granted" ou "denied": já escolheu;
+ * - null: ainda não escolheu;
+ * - undefined: ainda não dá para saber (HTML do servidor, antes de o navegador assumir).
+ */
+export function useConsent(): Consent | null | undefined {
+  return useSyncExternalStore(subscribe, readConsent, () => undefined);
 }

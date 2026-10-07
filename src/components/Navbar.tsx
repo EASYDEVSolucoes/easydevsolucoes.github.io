@@ -16,24 +16,24 @@ const pageLinks = [
 
 export default function Navbar() {
   const pathname = usePathname() ?? "/";
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  // Cada menu guarda a página em que foi aberto. Ao trocar de página o valor
+  // deixa de bater com a rota atual e o menu fecha sozinho, sem efeito colateral.
+  const [mobileOpenAt, setMobileOpenAt] = useState<string | null>(null);
+  const [servicesOpenAt, setServicesOpenAt] = useState<string | null>(null);
+  const mobileOpen = mobileOpenAt === pathname;
+  const servicesOpen = servicesOpenAt === pathname;
+  const setMobileOpen = (open: boolean) => setMobileOpenAt(open ? pathname : null);
+  const setServicesOpen = (open: boolean) => setServicesOpenAt(open ? pathname : null);
   const servicesRef = useRef<HTMLDivElement>(null);
-
-  // Fecha os menus ao trocar de página
-  useEffect(() => {
-    setMobileOpen(false);
-    setServicesOpen(false);
-  }, [pathname]);
 
   // Fecha o menu de serviços com Esc ou clique fora
   useEffect(() => {
     if (!servicesOpen) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setServicesOpen(false);
+      if (event.key === "Escape") setServicesOpenAt(null);
     };
     const onClick = (event: MouseEvent) => {
-      if (!servicesRef.current?.contains(event.target as Node)) setServicesOpen(false);
+      if (!servicesRef.current?.contains(event.target as Node)) setServicesOpenAt(null);
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClick);
@@ -76,7 +76,7 @@ export default function Navbar() {
               type="button"
               aria-expanded={servicesOpen}
               aria-controls="menu-servicos"
-              onClick={() => setServicesOpen((open) => !open)}
+              onClick={() => setServicesOpen(!servicesOpen)}
               className={`${linkClass(inServices)} inline-flex items-center gap-1`}
             >
               Serviços
@@ -125,7 +125,7 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            onClick={() => setMobileOpen((open) => !open)}
+            onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
             aria-controls="menu-celular"
             aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
