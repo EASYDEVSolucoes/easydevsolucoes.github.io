@@ -1,32 +1,21 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Termos de Uso",
+export const metadata = pageMetadata({
+  title: "Termos de uso",
   description:
-    "Termos de Uso da EasyDev Solucoes. Leia os termos e condicoes para utilizacao do nosso site e servicos.",
-  alternates: {
-    canonical: "/termos-de-uso/",
-  },
-  openGraph: {
-    title: "Termos de Uso | EasyDev",
-    description:
-      "Termos de Uso da EasyDev Solucoes. Leia os termos e condicoes para utilizacao do nosso site e servicos.",
-    url: "https://easydevsolucoes.com.br/termos-de-uso/",
-  },
-};
+    "Termos de uso da EasyDev Soluções Digitais. Leia os termos e condições para utilização do site e dos serviços.",
+  path: "/termos-de-uso/",
+});
 
 export default function TermsOfUse() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+    <div className="px-4 pb-16 pt-36 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          <h1 className="mb-8 text-4xl font-extrabold text-gray-900">
             Termos de Uso
           </h1>
 
-          <div className="space-y-6 text-gray-600">
+          <div className="space-y-6 text-gray-700">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 1. Aceitação dos Termos
@@ -178,16 +167,18 @@ export default function TermsOfUse() {
               </h2>
               <p>
                 Para questões relacionadas a estes Termos de Uso, entre em
-                contato conosco através do email: contato@easydevsolucoes.com.br
+                contato pelo e-mail{" "}
+                <a href="mailto:contato@easydevsolucoes.com.br" className="underline underline-offset-2">
+                  contato@easydevsolucoes.com.br
+                </a>
               </p>
             </section>
 
-            <p className="text-sm text-gray-500 mt-8">
-              Última atualização: {new Date().toLocaleDateString()}
+            <p className="mt-8 text-sm text-gray-700">
+              Última atualização: 14/01/2026
             </p>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

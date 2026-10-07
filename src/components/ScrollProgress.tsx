@@ -1,21 +1,38 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const ScrollProgress = () => {
-    const { scrollYProgress } = useScroll();
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001,
-    });
+/** Barra de 4px em dourado no topo, que acompanha a rolagem. */
+export default function ScrollProgress() {
+  const ref = useRef<HTMLDivElement>(null);
 
-    return (
-        <motion.div
-            className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[100]"
-            style={{ scaleX }}
-        />
-    );
-};
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      if (ref.current) ref.current.style.transform = `scaleX(${progress})`;
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
-export default ScrollProgress;
+  return (
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className="fixed left-0 right-0 top-0 z-[100] h-1 origin-left bg-primary"
+      style={{ transform: "scaleX(0)" }}
+    />
+  );
+}

@@ -1,82 +1,39 @@
-import Image from "next/image";
-import ScrollReveal from "./ScrollReveal";
+import { partners } from "@/data/site";
 
-const Partners = () => {
-  const partners = [
-    {
-      name: "GCDigicont",
-      url: "https://gcdigicont.com.br/",
-      logo: "https://gcdigicont.com.br/logo.png",
-    },
-    {
-      name: "Kenny Almeida Lab",
-      url: "https://kennygalmeida.com.br/",
-      logo: "https://kennygalmeida.com.br/kennylogo.png",
-    },
-    // Duplicating for infinite scroll effect if needed, or we can map twice
-    {
-      name: "GCDigicont",
-      url: "https://gcdigicont.com.br/",
-      logo: "https://gcdigicont.com.br/logo.png",
-    },
-    {
-      name: "Kenny Almeida Lab",
-      url: "https://kennygalmeida.com.br/",
-      logo: "https://kennygalmeida.com.br/kennylogo.png",
-    },
-  ];
+/** Parceiros. A lista fica em src/data/site.ts. */
+export default function Partners() {
+  if (partners.length === 0) return null;
 
   return (
-    <section id="partners" className="py-16 bg-gray-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-10">
-        <ScrollReveal width="100%">
-          <h2 className="text-3xl lg:text-4xl font-bold text-center text-gray-900">
-            Nossos Parceiros
-          </h2>
-        </ScrollReveal>
-      </div>
-
-      <div className="relative flex overflow-x-hidden group">
-        <div className="animate-marquee whitespace-nowrap flex gap-16 min-w-full justify-around items-center px-8">
-          {partners.map((partner, index) => (
-            <a
-              key={index}
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative w-[200px] h-[100px] grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 hover:scale-105 flex-shrink-0"
-            >
-              <Image
-                src={partner.logo}
-                alt={`${partner.name} Logo`}
-                fill
-                className="object-contain"
-              />
-            </a>
+    <section className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="parceiros">
+      <div className="container-page text-center">
+        <h2 id="parceiros" className="text-sm font-bold uppercase tracking-wider text-gray-700">
+          Parceiros
+        </h2>
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
+          {partners.map((partner) => (
+            <li key={partner.name}>
+              <a
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  width={200}
+                  height={80}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-20 w-[200px] object-contain"
+                />
+              </a>
+            </li>
           ))}
-        </div>
-
-        <div className="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-16 min-w-full justify-around items-center px-8">
-          {partners.map((partner, index) => (
-            <a
-              key={`clone-${index}`}
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative w-[200px] h-[100px] grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 hover:scale-105 flex-shrink-0"
-            >
-              <Image
-                src={partner.logo}
-                alt={`${partner.name} Logo`}
-                fill
-                className="object-contain"
-              />
-            </a>
-          ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
-};
-
-export default Partners;
+}

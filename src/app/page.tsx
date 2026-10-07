@@ -1,34 +1,38 @@
-
-
-import dynamic from "next/dynamic";
+import About from "@/components/About";
+import Audiences from "@/components/Audiences";
+import Contact from "@/components/Contact";
+import Faq from "@/components/Faq";
 import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Partners from "@/components/Partners";
+import Process from "@/components/Process";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import { homeFaq, howItWorks } from "@/data/offers";
+import { site } from "@/data/site";
+import { pageMetadata } from "@/lib/metadata";
 
-// Lazy load below-the-fold components
-const Services = dynamic(() => import("@/components/Services"), { ssr: true });
-const About = dynamic(() => import("@/components/About"), { ssr: true });
-const Mission = dynamic(() => import("@/components/Mission"), { ssr: true });
-const Partners = dynamic(() => import("@/components/Partners"), { ssr: true });
-const Contact = dynamic(() => import("@/components/Contact"), { ssr: true });
-const Process = dynamic(() => import("@/components/Process"), { ssr: true });
-const Testimonials = dynamic(() => import("@/components/Testimonials"), { ssr: true });
+export const metadata = pageMetadata({
+  title: "Sites, automação e sistemas para pequenas empresas em BH | EasyDev",
+  description: site.description,
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <Process />
-        <About />
-        <Mission />
-        <Testimonials />
-        <Partners />
-        <Contact />
-      </main>
-      <Footer />
+      <Hero />
+      <Audiences />
+      <Services />
+      <Process
+        lead="Do primeiro contato ao acompanhamento mensal, você sabe o que vem depois."
+        steps={howItWorks}
+      />
+      <About />
+      <Testimonials />
+      <Partners />
+      <Faq items={homeFaq} />
+      <Contact />
     </>
   );
 }

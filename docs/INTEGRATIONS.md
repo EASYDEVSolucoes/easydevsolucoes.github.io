@@ -9,20 +9,19 @@ Este documento detalha as configurações de integração com ferramentas de an�
 - **Verificação de Domínio**: Token meta-tag configurado em `src/app/layout.tsx`.
 
 ### Eventos Rastreados
-O Pixel dispara automaticamente para todas as páginas e eventos específicos para interações de alto valor:
+O Pixel só é carregado depois que a pessoa aceita os cookies de medição (`CookieConsent.tsx`). Os eventos ficam em `src/lib/analytics.ts`:
 
-| Evento | Gatilho | Componente |
+| Evento | Gatilho | Onde |
 | :--- | :--- | :--- |
-| `PageView` | Carregamento de qualquer página | `FacebookPixel.tsx` |
-| `Contact` | Envio do formulário de contato | `ContactForm.tsx` |
-| `Lead` (Custom) | Clique no botão WhatsApp | `WhatsAppButton.tsx` |
-| `FormSubmit` | Envio do formulário de contato | `ContactForm.tsx` |
+| `PageView` | Carregamento de página, depois do aceite | `FacebookPixel.tsx` |
+| `Contact` (`method: whatsapp`) | Clique em qualquer link de WhatsApp | `WhatsAppLink.tsx` |
+| `Lead` | Envio do formulário de diagnóstico | `ContactForm.tsx` |
 
 ### Validação
 Utilize a extensão **Meta Pixel Helper** para Chrome.
 1. Acesse o site.
 2. Verifique se o `PageView` foi disparado com sucesso.
-3. Preencha o formulário ou clique no WhatsApp para verificar os eventos `Contact` e `Lead`.
+3. Aceite os cookies, preencha o formulário ou clique no WhatsApp para verificar os eventos `Lead` e `Contact`.
 
 ---
 
@@ -33,14 +32,15 @@ Utilize a extensão **Meta Pixel Helper** para Chrome.
 - **Google Analytics 4 (GA4)**: ID de medição via `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
 
 ### Eventos Rastreados
-Eventos personalizados são disparados para o GA4 via `gtag.js` ou Data Layer do GTM:
+GTM e GA4 também só carregam depois do aceite de cookies. Eventos enviados ao GA4 via `gtag`:
 
 | Evento | Gatilho | Parâmetros |
 | :--- | :--- | :--- |
-| `page_view` | Carregamento de página | `page_path` |
-| `form_submit` | Sucesso no envio do formulário | `form_name: "contact_form"` |
-| `contact` | Sucesso no envio do formulário | `method: "email"` |
-| `whatsapp_click`| Clique no botão flutuante | N/A |
+| `page_view` | Carregamento de página (automático do GA4) | padrão |
+| `whatsapp_click` | Clique em qualquer link de WhatsApp | `origin`, `page` |
+| `generate_lead` | Envio do formulário de diagnóstico | `form: "diagnostico"`, `page` |
+
+Marque `whatsapp_click` e `generate_lead` como eventos principais (conversões) no GA4.
 
 ### Validação
 Utilize a extensão **Google Tag Assistant** ou o modo de Debug do GTM.
@@ -52,10 +52,10 @@ Utilize a extensão **Google Tag Assistant** ou o modo de Debug do GTM.
 ## 3. SEO (Otimização para Motores de Busca)
 
 ### Estrutura Técnica
-- **Next.js Metadata**: Títulos, descrições e Open Graph configurados em `src/app/layout.tsx`.
+- **Next.js Metadata**: padrões em `src/app/layout.tsx`; cada página define título, descrição e canonical com `pageMetadata()` (`src/lib/metadata.ts`).
 - **Sitemap**: Gerado automaticamente em `https://easydevsolucoes.com.br/sitemap.xml`.
 - **Robots.txt**: Configurado em `https://easydevsolucoes.com.br/robots.txt`.
-- **Schema Markup**: JSON-LD para `Organization` incluído no `layout.tsx` para Rich Snippets.
+- **Schema Markup**: um bloco `ProfessionalService` no `layout.tsx`, `Service` em cada página de oferta e `FAQPage` gerado das perguntas visíveis. Tudo sai de `src/data`.
 
 ### Verificação
 - Utilize o **Google Search Console** para verificar a indexação.

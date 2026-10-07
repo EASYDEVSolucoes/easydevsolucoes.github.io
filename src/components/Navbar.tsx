@@ -1,170 +1,170 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { smoothScroll } from "@/utils/smoothScroll";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Bars3Icon, ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { offers } from "@/data/offers";
 
-const navItems = [
-    { name: "Início", href: "/" },
-    { name: "Serviços", href: "#services" },
-    { name: "Processo", href: "#process" },
-    { name: "Sobre", href: "#about" },
-    { name: "Depoimentos", href: "#testimonials" },
-    { name: "Parceiros", href: "#partners" },
+const serviceLinks = offers.map((offer) => ({ name: offer.name, href: `/${offer.slug}/` }));
+
+const pageLinks = [
+  { name: "Preços", href: "/precos/" },
+  { name: "Sobre", href: "/sobre/" },
 ];
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname() ?? "/";
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  // Fecha os menus ao trocar de página
+  useEffect(() => {
+    setMobileOpen(false);
+    setServicesOpen(false);
+  }, [pathname]);
 
-    const handleClick = useCallback(
-        (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-            e.preventDefault();
-            setMobileMenuOpen(false);
+  // Fecha o menu de serviços com Esc ou clique fora
+  useEffect(() => {
+    if (!servicesOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setServicesOpen(false);
+    };
+    const onClick = (event: MouseEvent) => {
+      if (!servicesRef.current?.contains(event.target as Node)) setServicesOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [servicesOpen]);
 
-            // Link externo ou cross-page para âncora
-            if (typeof window !== "undefined" && window.location.pathname !== "/" && href.startsWith("#")) {
-                window.location.href = `/${href}`;
-                return;
-            }
+  const isCurrent = (href: string) => pathname === href || pathname === href.slice(0, -1);
+  const inServices = serviceLinks.some((link) => isCurrent(link.href));
 
-            if (href === "/") {
-                if (typeof window !== "undefined" && window.location.pathname !== "/") {
-                    window.location.href = "/";
-                    return;
-                }
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                return;
-            }
+  const linkClass = (active: boolean) =>
+    `px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-gray-100 ${
+      active ? "text-primary-text" : "text-gray-900"
+    }`;
 
-            smoothScroll(href);
-        },
-        []
-    );
+  return (
+    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 sm:top-6">
+      <nav
+        aria-label="Principal"
+        className="relative flex w-full items-center justify-between gap-2 rounded-full border border-white/40 bg-white/80 px-4 py-2.5 shadow-xl backdrop-blur-xl sm:px-6 md:w-fit md:gap-6"
+      >
+        <Link href="/" className="flex items-center gap-2 rounded-full pr-2" aria-label="EasyDev, página inicial">
+          <Image
+            src="/company/easydev-logo-96.webp"
+            alt=""
+            width={32}
+            height={32}
+            priority
+            className="h-8 w-8 object-contain"
+          />
+          <span className="font-bold tracking-tight text-gray-900">EasyDev</span>
+        </Link>
 
-    return (
-        <>
-            <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-                <motion.nav
-                    initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className={`
-            relative flex items-center justify-between 
-            px-6 py-3 rounded-full 
-            border border-white/40 shadow-xl 
-            backdrop-blur-xl bg-white/80 
-            transition-all duration-300
-            ${scrolled ? "w-[90%] md:w-fit px-8" : "w-[95%] md:w-fit"}
-          `}
+        {/* Navegação de computador */}
+        <div className="hidden items-center gap-1 md:flex">
+          <div ref={servicesRef} className="relative">
+            <button
+              type="button"
+              aria-expanded={servicesOpen}
+              aria-controls="menu-servicos"
+              onClick={() => setServicesOpen((open) => !open)}
+              className={`${linkClass(inServices)} inline-flex items-center gap-1`}
+            >
+              Serviços
+              <ChevronDownIcon
+                className={`h-4 w-4 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
+                aria-hidden="true"
+              />
+            </button>
+            {servicesOpen && (
+              <div
+                id="menu-servicos"
+                className="absolute left-1/2 top-full mt-4 w-72 -translate-x-1/2 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl"
+              >
+                {serviceLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isCurrent(link.href) ? "page" : undefined}
+                    className={`block rounded-xl px-4 py-3 text-sm font-medium transition-colors hover:bg-gray-50 ${
+                      isCurrent(link.href) ? "text-primary-text" : "text-gray-900"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+          {pageLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isCurrent(link.href) ? "page" : undefined}
+              className={linkClass(isCurrent(link.href))}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1">
+          <Link href="/diagnostico/" className="btn-primary btn-sm whitespace-nowrap !px-4 !shadow-md sm:!px-6">
+            Diagnóstico<span className="hidden min-[400px]:inline">&nbsp;gratuito</span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-expanded={mobileOpen}
+            aria-controls="menu-celular"
+            aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+            className="rounded-full p-2 text-gray-900 hover:bg-gray-100 md:hidden"
+          >
+            {mobileOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Navegação de celular */}
+        {mobileOpen && (
+          <div
+            id="menu-celular"
+            className="absolute inset-x-0 top-full mt-3 rounded-3xl border border-gray-100 bg-white p-4 shadow-2xl md:hidden"
+          >
+            <p className="px-4 pb-1 pt-2 text-xs font-bold uppercase tracking-wider text-gray-600">Serviços</p>
+            {serviceLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+                className="block rounded-xl px-4 py-3 font-semibold text-gray-900 hover:bg-gray-50"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <div className="mt-2 border-t border-gray-100 pt-2">
+              {pageLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  className="block rounded-xl px-4 py-3 font-semibold text-gray-900 hover:bg-gray-50"
                 >
-                    {/* Logo */}
-                    <Link
-                        href="/"
-                        onClick={(e) => handleClick(e, "/")}
-                        className="flex items-center gap-2 mr-8 group"
-                    >
-                        <div className="relative w-8 h-8">
-                            <Image
-                                src="/company/logoEasyDev.png"
-                                alt="EasyDev Logo"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
-                        </div>
-                        <span className="font-bold text-gray-900 tracking-tight group-hover:text-primary transition-colors">
-                            EasyDev
-                        </span>
-                    </Link>
-
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-1">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                onClick={(e) => handleClick(e, item.href)}
-                                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary hover:bg-white/50 rounded-full transition-all duration-200"
-                            >
-                                {item.name}
-                            </Link>
-                        ))}
-                    </div>
-
-                    {/* CTA Button */}
-                    <div className="hidden md:flex ml-6">
-                        <Link
-                            href="#contact"
-                            onClick={(e) => handleClick(e, "#contact")}
-                            className="bg-primary hover:bg-primary-light text-white text-sm font-bold py-2.5 px-6 rounded-full shadow-lg shadow-primary/20 transition-all duration-300 hover:scale-105 active:scale-95"
-                        >
-                            Fale Conosco
-                        </Link>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="flex md:hidden ml-4">
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 text-gray-700 hover:text-primary transition-colors"
-                            aria-label="Menu"
-                        >
-                            {mobileMenuOpen ? (
-                                <XMarkIcon className="w-6 h-6" />
-                            ) : (
-                                <Bars3Icon className="w-6 h-6" />
-                            )}
-                        </button>
-                    </div>
-                </motion.nav>
-            </header>
-
-            {/* Mobile Menu Dropdown */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed top-24 left-4 right-4 z-40 bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 md:hidden ring-1 ring-black/5"
-                    >
-                        <div className="flex flex-col space-y-2">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    onClick={(e) => handleClick(e, item.href)}
-                                    className="px-4 py-3 text-base font-semibold text-gray-800 hover:bg-primary/10 hover:text-primary rounded-xl transition-all"
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
-                            <div className="pt-4 mt-2 border-t border-gray-100">
-                                <Link
-                                    href="#contact"
-                                    onClick={(e) => handleClick(e, "#contact")}
-                                    className="block w-full text-center bg-primary text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition-transform"
-                                >
-                                    Iniciar Projeto
-                                </Link>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+    </header>
+  );
 }

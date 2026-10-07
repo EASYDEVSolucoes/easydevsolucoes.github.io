@@ -1,39 +1,28 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Politica de Privacidade",
+export const metadata = pageMetadata({
+  title: "Política de privacidade",
   description:
-    "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
-  alternates: {
-    canonical: "/politica-privacidade/",
-  },
-  openGraph: {
-    title: "Politica de Privacidade | EasyDev",
-    description:
-      "Politica de Privacidade da EasyDev Solucoes. Saiba como coletamos, usamos e protegemos suas informacoes pessoais.",
-    url: "https://easydevsolucoes.com.br/politica-privacidade/",
-  },
-};
+    "Política de privacidade da EasyDev Soluções Digitais. Saiba como coletamos, usamos e protegemos as suas informações pessoais.",
+  path: "/politica-privacidade/",
+});
 
 export default function PrivacyPolicy() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+    <div className="px-4 pb-16 pt-36 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          <h1 className="mb-8 text-4xl font-extrabold text-gray-900">
             Política de Privacidade
           </h1>
 
-          <div className="space-y-6 text-gray-600">
+          <div className="space-y-6 text-gray-700">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 1. Informações que coletamos
               </h2>
               <p className="mb-4">Coletamos informações quando você:</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Preenche nosso formulário de contato</li>
+                <li>Preenche o formulário de diagnóstico ou de contato</li>
                 <li>Se inscreve em nossa newsletter</li>
                 <li>Navega em nosso site</li>
                 <li>Interage com nossos serviços</li>
@@ -69,12 +58,18 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                4. Cookies
+                4. Cookies e medição
               </h2>
+              <p className="mb-4">
+                Usamos o Google Analytics, o Google Tag Manager e o Pixel da
+                Meta para medir visitas ao site e contatos gerados por ele.
+                Essas ferramentas só são ativadas depois que você aceita no
+                aviso de cookies. Se você recusar, elas não são carregadas.
+              </p>
               <p>
-                Utilizamos cookies para melhorar sua experiência em nosso site.
-                Você pode desativar os cookies em seu navegador, mas isso pode
-                afetar a funcionalidade de alguns recursos.
+                Você pode mudar a sua escolha a qualquer momento em
+                &quot;Preferências de cookies&quot;, no rodapé do site. O
+                formulário de diagnóstico é enviado por meio do serviço EmailJS.
               </p>
             </section>
 
@@ -109,7 +104,10 @@ export default function PrivacyPolicy() {
               </h2>
               <p>
                 Para questões relacionadas à privacidade de seus dados, entre em
-                contato conosco através do email: contato@easydevsolucoes.com.br
+                contato pelo e-mail{" "}
+                <a href="mailto:contato@easydevsolucoes.com.br" className="underline underline-offset-2">
+                  contato@easydevsolucoes.com.br
+                </a>
               </p>
             </section>
 
@@ -125,12 +123,11 @@ export default function PrivacyPolicy() {
               </p>
             </section>
 
-            <p className="text-sm text-gray-500 mt-8">
-              Última atualização: {new Date().toLocaleDateString()}
+            <p className="mt-8 text-sm text-gray-700">
+              Última atualização: 07/10/2026
             </p>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

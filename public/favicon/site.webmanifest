@@ -1,5 +1,5 @@
 {
-  "name": "EasyDev",
+  "name": "EasyDev Soluções Digitais",
   "short_name": "EasyDev",
   "icons": [
     {
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#E68A00",
-  "background_color": "#ffffff",
+  "theme_color": "#D4AF37",
+  "background_color": "#FAFAFA",
   "display": "standalone"
 }

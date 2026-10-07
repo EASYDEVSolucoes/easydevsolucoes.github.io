@@ -1,40 +1,58 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
-interface ScrollRevealProps {
-    children: React.ReactNode;
-    width?: "fit-content" | "100%";
-    delay?: number;
-}
+/**
+ * Entrada suave ao rolar a página.
+ *
+ * O conteúdo sai visível no HTML. Só depois que o JavaScript carrega, e só para
+ * blocos que ainda estão abaixo da tela, o bloco é escondido e reaparece ao
+ * entrar na tela. Sem JavaScript, ou com "reduzir movimento" ligado, nada some.
+ */
+export default function ScrollReveal({
+  children,
+  delay = 0,
+  className = "",
+  style,
+}: {
+  children: ReactNode;
+  /** Atraso em segundos, para escalonar cards lado a lado. */
+  delay?: number;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
 
-const ScrollReveal = ({
-    children,
-    width = "fit-content",
-    delay = 0,
-    className = "",
-    style = {},
-}: ScrollRevealProps & { className?: string; style?: React.CSSProperties }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-50px" });
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (element.getBoundingClientRect().top < window.innerHeight * 0.92) return;
 
-    return (
-        <div ref={ref} style={{ width, ...style }} className={`relative ${className}`}>
-            <motion.div
-                variants={{
-                    hidden: { opacity: 0, y: 75 },
-                    visible: { opacity: 1, y: 0 },
-                }}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
-                className="h-full"
-            >
-                {children}
-            </motion.div>
-        </div>
+    element.classList.add("reveal-pending");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          element.classList.remove("reveal-pending");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -40px 0px" }
     );
-};
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      element.classList.remove("reveal-pending");
+    };
+  }, []);
 
-export default ScrollReveal;
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${className}`}
+      style={{ transitionDelay: delay ? `${delay}s` : undefined, ...style }}
+    >
+      {children}
+    </div>
+  );
+}

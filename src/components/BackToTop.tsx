@@ -1,48 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
-import { AnimatePresence, motion } from "framer-motion";
 
-const BackToTop = () => {
-    const [isVisible, setIsVisible] = useState(false);
+/** Botão de voltar ao topo. Fica logo acima do botão de WhatsApp. */
+export default function BackToTop() {
+  const [visible, setVisible] = useState(false);
 
-    useEffect(() => {
-        const toggleVisibility = () => {
-            if (window.scrollY > 300) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        };
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-        window.addEventListener("scroll", toggleVisibility);
-        return () => window.removeEventListener("scroll", toggleVisibility);
-    }, []);
+  if (!visible) return null;
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
-
-    return (
-        <AnimatePresence>
-            {isVisible && (
-                <motion.button
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    onClick={scrollToTop}
-                    className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 p-3 bg-white/10 backdrop-blur-md border border-primary/20 text-primary rounded-xl shadow-xl hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1 group"
-                    aria-label="Voltar ao topo"
-                >
-                    <ArrowUpIcon className="h-6 w-6" />
-                </motion.button>
-            )}
-        </AnimatePresence>
-    );
-};
-
-export default BackToTop;
+  return (
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Voltar ao topo"
+      className="fixed bottom-24 right-8 z-40 rounded-full border border-gray-200 bg-white p-3 text-gray-900 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-50"
+    >
+      <ArrowUpIcon className="h-5 w-5" aria-hidden="true" />
+    </button>
+  );
+}
