@@ -122,7 +122,7 @@ Esta documentação contém guias completos e atualizados para otimização de S
 - **Search Console**: Conta Google da empresa
 - **Analytics**: Mesma conta
 - **Tag Manager**: GTM-TS6PQGFD
-- **Analytics ID**: G-8Y1HCD837X
+- **Analytics ID**: G-D94HDKTB13
 
 ### Códigos de Verificação
 - **Google**: `BPnXcpPDKavEMiXzQ94uU2dKQIVFX2pnewz4d30hu9g`
