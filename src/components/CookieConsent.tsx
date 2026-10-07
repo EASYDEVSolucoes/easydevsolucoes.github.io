@@ -2,27 +2,31 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { OPEN_EVENT, openConsentBanner, readConsent, writeConsent } from "@/lib/consent";
+import { useConsent } from "@/hooks/useConsent";
+import { OPEN_EVENT, openConsentBanner, writeConsent } from "@/lib/consent";
 
 /**
  * Aviso de cookies. Google Analytics, Tag Manager e Pixel da Meta só são
  * carregados depois do "Aceitar". Recusar tem o mesmo destaque que aceitar.
  */
 export default function CookieConsent() {
-  const [open, setOpen] = useState(false);
+  const consent = useConsent();
+  // true quando a pessoa pede para rever a escolha pelo link do rodapé
+  const [reopened, setReopened] = useState(false);
 
   useEffect(() => {
-    if (readConsent() === null) setOpen(true);
-    const reopen = () => setOpen(true);
+    const reopen = () => setReopened(true);
     window.addEventListener(OPEN_EVENT, reopen);
     return () => window.removeEventListener(OPEN_EVENT, reopen);
   }, []);
 
+  // aparece para quem ainda não escolheu (null) ou pediu para rever
+  const open = consent === null || (reopened && consent !== undefined);
   if (!open) return null;
 
   const choose = (value: "granted" | "denied") => {
     writeConsent(value);
-    setOpen(false);
+    setReopened(false);
   };
 
   return (

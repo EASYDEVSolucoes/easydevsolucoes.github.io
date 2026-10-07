@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
 import Partners from "@/components/Partners";
 import Testimonials from "@/components/Testimonials";
-import { site, team } from "@/data/site";
+import { team } from "@/data/site";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbNode, graph, ORG_ID, webPageNode, type Crumb } from "@/lib/schema";
 
