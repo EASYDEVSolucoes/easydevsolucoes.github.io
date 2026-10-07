@@ -119,7 +119,9 @@ export default function Navbar() {
 
         <div className="flex items-center gap-1">
           <Link href="/diagnostico/" className="btn-primary btn-sm whitespace-nowrap !px-4 !shadow-md sm:!px-6">
-            Diagnóstico<span className="hidden min-[400px]:inline">&nbsp;gratuito</span>
+            <span>
+              Diagnóstico<span className="hidden min-[400px]:inline"> gratuito</span>
+            </span>
           </Link>
           <button
             type="button"

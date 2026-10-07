@@ -41,7 +41,7 @@ export const site = {
     instagram: "https://www.instagram.com/easydevsolucoes",
     linkedin: "https://www.linkedin.com/company/easydevsolucoes",
     github: "https://github.com/EASYDEVSolucoes",
-    facebook: "https://www.facebook.com/profile.php?id=100077274026710",
+    facebook: "https://www.facebook.com/Easydevsolucoes",
   },
 
   /** Data da última revisão de conteúdo; vai para o sitemap e para as páginas legais. */
@@ -105,3 +105,34 @@ export const testimonials: {
   role: string;
   link?: string;
 }[] = [];
+
+/** Data de `site.lastUpdated` por extenso: "7 de outubro de 2026". */
+export function lastUpdatedLong(): string {
+  const [year, month, day] = site.lastUpdated.split("-").map(Number);
+  const months = [
+    "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+    "julho", "agosto", "setembro", "outubro", "novembro", "dezembro",
+  ];
+  return `${day} de ${months[month - 1]} de ${year}`;
+}
+
+/**
+ * Definição da empresa em uma frase que se sustenta sozinha. É o trecho pensado
+ * para ser citado por buscadores e assistentes de IA; aparece no site, nos
+ * dados estruturados e no /llms.txt.
+ */
+export const companyDefinition =
+  "A EasyDev Soluções Digitais é uma empresa de tecnologia de Ibirité, na Grande BH (Minas Gerais), que faz sites, gestão do Perfil da Empresa no Google, atendimento com inteligência artificial no WhatsApp, gestão de redes sociais e sistemas sob medida para empresas de 3 a 50 pessoas, com preço de partida publicado e diagnóstico gratuito.";
+
+/** Assuntos em que a empresa atua, para os dados estruturados (knowsAbout). */
+export const expertise = [
+  "Criação de sites",
+  "SEO local",
+  "Perfil da Empresa no Google",
+  "Atendimento automático no WhatsApp",
+  "Inteligência artificial para pequenas empresas",
+  "Automação de processos",
+  "Desenvolvimento de sistemas sob medida",
+  "Desenvolvimento de aplicativos",
+  "Gestão de redes sociais",
+];

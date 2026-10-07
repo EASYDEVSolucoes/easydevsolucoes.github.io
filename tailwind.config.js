@@ -12,7 +12,8 @@ module.exports = {
           DEFAULT: "#D4AF37", // Golden/Ochre from Logo
           light: "#E5C158",
           dark: "#B39226",
-          text: "#8A6D1A", // dourado para texto pequeno sobre fundo claro (4,6:1)
+          text: "#8A6D1A", // dourado para texto pequeno sobre branco ou surface (4,7:1)
+          "text-strong": "#735A14", // dourado para texto pequeno sobre primary-tint (5,7:1)
           tint: "#F4EFDE", // fundo do selo
           "tint-strong": "#F8F2DF", // bloco de ícone, número e ✓
         },

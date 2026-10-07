@@ -4,17 +4,23 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
 import Process from "@/components/Process";
+import Summary from "@/components/Summary";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import WhatsAppLink from "@/components/WhatsAppLink";
 import { diagnostico } from "@/data/offers";
 import { absoluteUrl, site } from "@/data/site";
 import { pageMetadata } from "@/lib/metadata";
+import { breadcrumbNode, graph, ORG_ID, webPageNode, type Crumb } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: diagnostico.metaTitle,
   description: diagnostico.metaDescription,
   path: "/diagnostico/",
+  image: "/og/diagnostico.png",
 });
+
+const path = "/diagnostico/";
+const crumbs: Crumb[] = [{ name: "Diagnóstico gratuito", path }];
 
 export default function DiagnosticoPage() {
   const url = absoluteUrl("diagnostico");
@@ -23,6 +29,7 @@ export default function DiagnosticoPage() {
     <>
       <PageHero
         chip="Diagnóstico gratuito"
+        crumbs={crumbs}
         title={diagnostico.title}
         lead={diagnostico.lead}
         origin="hero-diagnostico"
@@ -50,6 +57,22 @@ export default function DiagnosticoPage() {
         </div>
       </PageHero>
 
+      <Summary
+        heading={diagnostico.searchHeading}
+        definition={diagnostico.definition}
+        facts={[
+          { label: "Preço", value: "Gratuito, sem compromisso de contratar" },
+          { label: "Duração", value: `${diagnostico.duration} de conversa com um sócio` },
+          { label: "Entrega", value: diagnostico.leadTime },
+          { label: "Para quem é", value: diagnostico.forWho },
+          {
+            label: "Onde a EasyDev atende",
+            value: `${site.serviceCities.join(", ")} e, de forma remota, todo o Brasil`,
+          },
+          { label: "Como pedir", value: `Pelo formulário desta página ou pelo WhatsApp ${site.phoneDisplay}` },
+        ]}
+      />
+
       <section className="section-padding bg-white" aria-labelledby="o-que-recebe">
         <div className="container-page grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="card">
@@ -67,7 +90,7 @@ export default function DiagnosticoPage() {
       </section>
 
       <Process steps={diagnostico.steps} />
-      <Faq items={diagnostico.faq} />
+      <Faq items={diagnostico.faq} path={path} />
 
       <section className="section-padding" aria-labelledby="pedir-final">
         <div className="mx-auto max-w-2xl text-center">
@@ -87,16 +110,25 @@ export default function DiagnosticoPage() {
       </section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Service",
-          "@id": `${url}#servico`,
-          name: diagnostico.name,
-          description: diagnostico.metaDescription,
-          url,
-          provider: { "@id": `${site.url}/#empresa` },
-          offers: { "@type": "Offer", url, price: 0, priceCurrency: "BRL" },
-        }}
+        data={graph(
+          webPageNode({
+            path,
+            title: diagnostico.metaTitle,
+            description: diagnostico.metaDescription,
+            mainEntityId: `${url}#servico`,
+          }),
+          breadcrumbNode(path, crumbs),
+          {
+            "@type": "Service",
+            "@id": `${url}#servico`,
+            name: diagnostico.name,
+            serviceType: diagnostico.searchHeading,
+            description: diagnostico.definition,
+            url,
+            provider: { "@id": ORG_ID },
+            offers: { "@type": "Offer", url, price: 0, priceCurrency: "BRL" },
+          }
+        )}
       />
     </>
   );

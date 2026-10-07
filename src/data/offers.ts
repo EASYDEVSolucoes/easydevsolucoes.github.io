@@ -1,14 +1,45 @@
 /**
  * Catálogo de ofertas da EasyDev.
  *
- * Os preços, prazos e escopos mostrados no site saem deste arquivo:
- * página inicial, páginas de oferta, /precos e dados estruturados.
- * Mudou a tabela? Edite aqui e publique.
+ * Os preços, prazos e escopos mostrados no site saem deste arquivo: página
+ * inicial, páginas de oferta, /precos, perguntas frequentes, dados
+ * estruturados, /llms.txt e /llms-full.txt.
  *
- * Dois lugares repetem valores em texto e precisam ser conferidos à mão:
- * as respostas de perguntas frequentes (campos `faq` e `homeFaq`, abaixo)
- * e o arquivo public/llms.txt.
+ * Mudou um valor? Mude em `price`, logo abaixo. Todos os textos que citam
+ * aquele valor são montados a partir dali.
  */
+
+/** Tabela de preços. É o único lugar do site onde os valores estão escritos. */
+export const price = {
+  presenca: 490,
+  landing: 2400,
+  site: 5400,
+  cuidar: 290,
+  cuidarSeo: 690,
+  iaImplantacao: 2500,
+  iaMensal: 690,
+  diagnosticoProcesso: 900,
+  automacaoMin: 1500,
+  automacaoMax: 6000,
+  sistemaMin: 12000,
+  sistemaMax: 30000,
+  suporte: 600,
+  redesEssencial: 1200,
+  redesCompleto: 2200,
+} as const;
+
+/** 2400 -> "R$ 2.400" */
+export function brl(value: number): string {
+  return `R$ ${value.toLocaleString("pt-BR")}`;
+}
+
+/** Prazos de entrega, também citados em mais de um lugar. */
+export const leadTime = {
+  presenca: "5 dias úteis",
+  landing: "10 dias úteis",
+  site: "25 dias úteis",
+  ia: "15 dias úteis",
+} as const;
 
 export type IconKey =
   | "diagnostico"
@@ -20,6 +51,12 @@ export type IconKey =
 
 export type Plan = {
   name: string;
+  /** Valor em reais, para os dados estruturados. Em faixas, é o menor valor. */
+  value: number;
+  /** Maior valor, quando o preço é uma faixa. */
+  maxValue?: number;
+  /** true quando o valor é cobrado todo mês. */
+  monthly?: boolean;
   /** Valor como aparece na tela, por exemplo "R$ 2.400". */
   price: string;
   /** Complemento do valor: "por mês", "de implantação". */
@@ -52,8 +89,21 @@ export type Offer = {
   metaTitle: string;
   metaDescription: string;
   forWho: string;
-  /** Dado de mercado com fonte e ano, quando houver. */
-  evidence?: string;
+  /**
+   * Título do bloco "Em resumo", escrito como a pessoa procura no Google.
+   */
+  searchHeading: string;
+  /**
+   * Uma ou duas frases que definem a oferta sozinhas, com nome, preço e prazo.
+   * É o trecho pensado para ser citado por buscadores e assistentes de IA.
+   */
+  definition: string;
+  /** Prazo resumido, para o bloco "Em resumo". */
+  leadTime: string;
+  /** Dado de mercado com fonte, ano e link. Só entra dado conferido na fonte. */
+  evidence?: { text: string; source: string; url: string };
+  /** Ofertas relacionadas, pelo slug, para os links internos no fim da página. */
+  related: string[];
   plansTitle: string;
   plans: Plan[];
   /** Plano mensal que acompanha a oferta (Plano Cuidar, mensalidade do atendente). */
@@ -86,6 +136,11 @@ export const diagnostico = {
   metaTitle: "Diagnóstico digital gratuito para pequenas empresas",
   metaDescription:
     "Em 30 minutos, descubra os 5 pontos que mais custam clientes no seu site, no Google e no WhatsApp. Gratuito, sem compromisso, para empresas da Grande BH e de todo o Brasil.",
+  searchHeading: "Diagnóstico gratuito de site, Google e WhatsApp",
+  definition:
+    "O Diagnóstico Digital da EasyDev é uma análise gratuita do site, do Perfil da Empresa no Google e do atendimento pelo WhatsApp de uma pequena empresa. São 30 minutos de conversa com um sócio e, em até 24 horas, uma página com os 5 pontos que mais custam clientes e uma recomendação do que fazer primeiro.",
+  forWho: "Pequenas empresas de 3 a 50 pessoas, com ou sem site.",
+  leadTime: "Página com os achados em até 24 horas depois da conversa",
   includes: [
     "Análise do seu site, do seu perfil no Google e do seu WhatsApp, feita antes da conversa",
     "Chamada de 30 minutos com um sócio da EasyDev",
@@ -125,6 +180,10 @@ export const diagnostico = {
   ],
   faq: [
     {
+      q: "O que é o Diagnóstico Digital?",
+      a: "É uma análise gratuita de como a sua empresa aparece na internet: o site, o Perfil da Empresa no Google e o atendimento pelo WhatsApp. Termina com uma página de 5 achados, em ordem de prioridade, e uma recomendação.",
+    },
+    {
       q: "É gratuito mesmo?",
       a: "É. São 30 minutos de conversa e uma página com 5 achados. Você não precisa contratar nada depois.",
     },
@@ -157,23 +216,31 @@ export const offers: Offer[] = [
     lead: "A gente cria ou recupera o Perfil da Empresa no Google, mantém tudo atualizado todo mês e mostra o resultado em buscas, ligações e pedidos de rota.",
     cardText:
       "Perfil da Empresa no Google arrumado, 4 publicações por mês, avaliações respondidas e relatório.",
-    priceFrom: "R$ 490",
+    priceFrom: brl(price.presenca),
     priceFromUnit: "por mês",
-    priceFromValue: 490,
+    priceFromValue: price.presenca,
     metaTitle: "Presença Local: sua empresa no Google e no Maps",
-    metaDescription:
-      "Perfil da Empresa no Google criado ou recuperado, 4 publicações por mês, resposta a avaliações e relatório mensal. R$ 490 por mês para negócios da Grande BH.",
+    metaDescription: `Perfil da Empresa no Google criado ou recuperado, 4 publicações por mês, resposta a avaliações e relatório mensal. ${brl(price.presenca)} por mês para negócios da Grande BH.`,
     forWho:
       "Negócio local de serviço, com endereço ou área de atendimento: clínicas, salões, oficinas e escritórios.",
-    evidence:
-      "Em Minas Gerais, 31% dos pequenos negócios não têm Perfil da Empresa no Google e outros 23% quase não atualizam (Sebrae, 2024).",
+    searchHeading: "Gestão do Perfil da Empresa no Google para negócios locais",
+    definition: `Presença Local é o plano mensal da EasyDev para uma empresa aparecer no Google e no Google Maps. Por ${brl(price.presenca)} por mês, a EasyDev cria ou recupera o Perfil da Empresa no Google (o antigo Google Meu Negócio), faz 4 publicações por mês, responde a todas as avaliações e envia um relatório com buscas, ligações e pedidos de rota.`,
+    leadTime: `Perfil arrumado em ${leadTime.presenca}; contrato mínimo de 3 meses`,
+    evidence: {
+      text: "96% dos consumidores leem avaliações de outros clientes antes de escolher uma loja física.",
+      source: "Reclame Aqui e Harmo, 2025",
+      url: "https://mercadoeconsumo.com.br/26/03/2025/noticias-varejo/reclame-aqui-96-dos-consumidores-leem-avaliacoes-no-google-antes-de-comprar/",
+    },
+    related: ["sites", "whatsapp-ia"],
     plansTitle: "Um plano, um preço",
     plans: [
       {
         name: "Presença Local",
-        price: "R$ 490",
+        value: price.presenca,
+        monthly: true,
+        price: brl(price.presenca),
         unit: "por mês",
-        term: "Mínimo de 3 meses · perfil arrumado em 5 dias úteis",
+        term: `Mínimo de 3 meses · perfil arrumado em ${leadTime.presenca}`,
         description: "Tudo o que o seu perfil precisa para ficar completo e ativo.",
         includes: [
           "Perfil da Empresa no Google criado ou recuperado, e completo",
@@ -193,7 +260,7 @@ export const offers: Offer[] = [
       },
       {
         title: "Perfil arrumado",
-        text: "Em 5 dias úteis: categorias, horário, serviços, fotos que você enviar e link do WhatsApp.",
+        text: `Em ${leadTime.presenca}: categorias, horário, serviços, fotos que você enviar e link do WhatsApp.`,
       },
       {
         title: "Rotina do mês",
@@ -205,6 +272,14 @@ export const offers: Offer[] = [
       },
     ],
     faq: [
+      {
+        q: "O que é o Perfil da Empresa no Google?",
+        a: "É a ficha gratuita da sua empresa no Google, antes chamada de Google Meu Negócio. É ela que aparece na busca e no Google Maps com endereço, horário, telefone, fotos e avaliações.",
+      },
+      {
+        q: "Quanto custa a gestão do Perfil da Empresa no Google?",
+        a: `Na EasyDev, o plano Presença Local custa ${brl(price.presenca)} por mês, com mínimo de 3 meses. Inclui o perfil criado ou recuperado, 4 publicações por mês, resposta a todas as avaliações e relatório mensal.`,
+      },
       {
         q: "Preciso ter site?",
         a: "Não. O Perfil da Empresa no Google funciona sem site. Se você tiver um, a gente liga os dois.",
@@ -231,21 +306,24 @@ export const offers: Offer[] = [
     icon: "sites",
     title: ["Um site que transforma visita em conversa no ", "WhatsApp", "."],
     lead: "Feito em código próprio, na identidade da sua empresa, com preço e prazo fechados. Sem Wix, sem WordPress e sem mensalidade de plataforma.",
-    cardText:
-      "Landing page em 10 dias úteis, ou site com páginas de serviço e SEO local em 25.",
-    priceFrom: "R$ 2.400",
-    priceFromValue: 2400,
+    cardText: `Landing page em ${leadTime.landing}, ou site com páginas de serviço e SEO local em 25.`,
+    priceFrom: brl(price.landing),
+    priceFromValue: price.landing,
     metaTitle: "Criação de sites para pequenas empresas em BH e região",
-    metaDescription:
-      "Landing page por R$ 2.400 em 10 dias úteis, ou site com páginas de serviço e SEO local por R$ 5.400. Código próprio, preço fechado e suporte.",
+    metaDescription: `Landing page por ${brl(price.landing)} em ${leadTime.landing}, ou site com páginas de serviço e SEO local por ${brl(price.site)}. Código próprio, preço fechado e suporte.`,
     forWho:
       "Profissionais técnicos, consultorias e negócios locais que precisam de um site que passe confiança e gere pedido de orçamento.",
+    searchHeading: "Criação de sites para pequenas empresas na Grande BH",
+    definition: `A EasyDev cria sites para pequenas empresas de Belo Horizonte, Contagem, Betim, Ibirité e, de forma remota, de todo o Brasil. Uma landing page custa ${brl(price.landing)} e fica pronta em ${leadTime.landing}; um site com páginas de serviço e SEO local custa ${brl(price.site)} e fica pronto em ${leadTime.site}. Os sites são feitos em código próprio (Next.js), sem Wix nem WordPress.`,
+    leadTime: `Landing page em ${leadTime.landing}; site com páginas de serviço em ${leadTime.site}`,
+    related: ["presenca-local", "whatsapp-ia"],
     plansTitle: "Dois tamanhos, preço fechado",
     plans: [
       {
         name: "Landing page",
-        price: "R$ 2.400",
-        term: "10 dias úteis depois do material recebido",
+        value: price.landing,
+        price: brl(price.landing),
+        term: `${leadTime.landing} depois do material recebido`,
         description: "Para profissional ou negócio com uma oferta principal.",
         includes: [
           "Design na identidade da sua empresa",
@@ -259,8 +337,9 @@ export const offers: Offer[] = [
       },
       {
         name: "Site com páginas de serviço",
-        price: "R$ 5.400",
-        term: "25 dias úteis",
+        value: price.site,
+        price: brl(price.site),
+        term: leadTime.site,
         description: "Para empresa com 3 ou mais serviços e concorrência local no Google.",
         includes: [
           "Tudo da landing page",
@@ -280,7 +359,9 @@ export const offers: Offer[] = [
       plans: [
         {
           name: "Cuidar",
-          price: "R$ 290",
+          value: price.cuidar,
+          monthly: true,
+          price: brl(price.cuidar),
           unit: "por mês",
           description: "Para o site continuar no ar, seguro e atualizado.",
           includes: [
@@ -292,9 +373,12 @@ export const offers: Offer[] = [
         },
         {
           name: "Cuidar com SEO local",
-          price: "R$ 690",
+          value: price.cuidarSeo,
+          monthly: true,
+          price: brl(price.cuidarSeo),
           unit: "por mês",
-          description: "Tudo do Cuidar, mais trabalho contínuo para o site aparecer nas buscas da sua região.",
+          description:
+            "Tudo do Cuidar, mais trabalho contínuo para o site aparecer nas buscas da sua região.",
           includes: ["Tudo do plano Cuidar", "SEO local contínuo"],
         },
       ],
@@ -326,6 +410,18 @@ export const offers: Offer[] = [
     ],
     faq: [
       {
+        q: "Quanto custa um site para pequena empresa?",
+        a: `Na EasyDev, uma landing page custa ${brl(price.landing)} e um site com até 4 páginas de serviço e SEO local custa ${brl(price.site)}. O acompanhamento mensal (Plano Cuidar) custa ${brl(price.cuidar)} por mês e é opcional.`,
+      },
+      {
+        q: "Quanto tempo leva para fazer um site?",
+        a: `A landing page fica pronta em ${leadTime.landing}, contados do dia em que a gente recebe o material (logo, textos e fotos). O site com páginas de serviço fica pronto em ${leadTime.site}.`,
+      },
+      {
+        q: "Qual a diferença entre landing page e site?",
+        a: "A landing page é uma página só, com até 6 seções, para quem tem uma oferta principal. O site tem uma página para cada serviço, o que ajuda a empresa a aparecer no Google nas buscas por cada um deles.",
+      },
+      {
         q: "Por que não usar Wix ou WordPress?",
         a: "Para muita gente eles resolvem. A gente trabalha com código próprio (Next.js) porque o site fica leve e você não paga mensalidade de plataforma nem depende de plugin.",
       },
@@ -338,12 +434,8 @@ export const offers: Offer[] = [
         a: "Você envia os textos e as fotos. A redação completa não está incluída no preço.",
       },
       {
-        q: "Quando o prazo começa a contar?",
-        a: "Na landing page, os 10 dias úteis contam a partir do dia em que a gente recebe o material: logo, textos e fotos.",
-      },
-      {
         q: "O que é o Plano Cuidar?",
-        a: "É o acompanhamento mensal do site: hospedagem acompanhada, até 2 horas de ajustes, backup e relatório, por R$ 290 por mês. Entra em toda proposta de site e você tira se quiser.",
+        a: `É o acompanhamento mensal do site: hospedagem acompanhada, até 2 horas de ajustes, backup e relatório, por ${brl(price.cuidar)} por mês. Com SEO local contínuo, custa ${brl(price.cuidarSeo)} por mês. Entra em toda proposta de site e você tira se quiser.`,
       },
     ],
     whatsappMessage: "Olá! Vi a página de sites da EasyDev e quero um orçamento para a minha empresa.",
@@ -356,24 +448,31 @@ export const offers: Offer[] = [
     lead: "Um atendente com inteligência artificial, treinado com as respostas da sua empresa. Ele tira dúvidas, qualifica, agenda e passa a conversa para você quando precisa de gente.",
     cardText:
       "Atendente treinado com as respostas da sua empresa, que qualifica, agenda e passa para uma pessoa.",
-    priceFrom: "R$ 2.500",
-    priceFromUnit: "+ R$ 690 por mês",
-    priceFromValue: 2500,
+    priceFrom: brl(price.iaImplantacao),
+    priceFromUnit: `+ ${brl(price.iaMensal)} por mês`,
+    priceFromValue: price.iaImplantacao,
     metaTitle: "Atendimento automático no WhatsApp com IA para empresas",
-    metaDescription:
-      "Atendente com inteligência artificial no WhatsApp Business: responde dúvidas, qualifica, agenda e passa para uma pessoa. Implantação de R$ 2.500 e R$ 690 por mês.",
+    metaDescription: `Atendente com inteligência artificial no WhatsApp Business: responde dúvidas, qualifica, agenda e passa para uma pessoa. Implantação de ${brl(price.iaImplantacao)} e ${brl(price.iaMensal)} por mês.`,
     forWho:
       "Negócio que recebe 20 ou mais mensagens por dia com perguntas repetidas: clínicas, salões, oficinas, escolas e imobiliárias.",
-    evidence:
-      "Entre os pequenos negócios que vendem pela internet, 82% vendem pelo WhatsApp (Sebrae, 2026).",
+    searchHeading: "Atendimento automático no WhatsApp com inteligência artificial",
+    definition: `O Atendente IA da EasyDev é um atendente com inteligência artificial que responde no WhatsApp Business da empresa, pela API oficial. Ele usa a base de respostas da própria empresa para tirar dúvidas, qualificar, agendar e passar a conversa para uma pessoa. A implantação custa ${brl(price.iaImplantacao)}, o acompanhamento custa ${brl(price.iaMensal)} por mês e o atendente entra no ar em ${leadTime.ia}.`,
+    leadTime: `No ar em ${leadTime.ia}, mais 30 dias de ajuste fino`,
+    evidence: {
+      text: "O WhatsApp é canal de vendas de 82% dos pequenos negócios brasileiros.",
+      source: "Sebrae, Pulso dos Pequenos Negócios, 2026",
+      url: "https://agenciasebrae.com.br/dados/whatsapp-se-consolida-nas-vendas-on-line-enquanto-facebook-e-lojas-proprias-perdem-folego/",
+    },
+    related: ["sob-medida", "presenca-local"],
     plansTitle: "Implantação e mensalidade",
     plans: [
       {
         name: "Atendente IA",
-        price: "R$ 2.500",
+        value: price.iaImplantacao,
+        price: brl(price.iaImplantacao),
         unit: "de implantação",
-        priceExtra: "+ R$ 690 por mês",
-        term: "No ar em 15 dias úteis",
+        priceExtra: `+ ${brl(price.iaMensal)} por mês`,
+        term: `No ar em ${leadTime.ia}`,
         description: "Do levantamento das perguntas até o atendente respondendo no seu número.",
         includes: [
           "Levantamento das 20 perguntas mais comuns",
@@ -392,7 +491,9 @@ export const offers: Offer[] = [
       plans: [
         {
           name: "Acompanhamento mensal",
-          price: "R$ 690",
+          value: price.iaMensal,
+          monthly: true,
+          price: brl(price.iaMensal),
           unit: "por mês",
           description: "Para o atendente continuar respondendo certo quando a sua empresa muda.",
           includes: [
@@ -419,7 +520,7 @@ export const offers: Offer[] = [
         text: "Levantamos as 20 perguntas mais comuns e as respostas da sua empresa para cada uma.",
       },
       {
-        title: "No ar em 15 dias úteis",
+        title: `No ar em ${leadTime.ia}`,
         text: "O atendente passa a responder no seu número, pela API oficial do WhatsApp Business.",
       },
       {
@@ -428,6 +529,14 @@ export const offers: Offer[] = [
       },
     ],
     faq: [
+      {
+        q: "O que é um atendente com IA no WhatsApp?",
+        a: "É um programa com inteligência artificial que responde às mensagens no WhatsApp da empresa, a qualquer hora, usando as respostas que a própria empresa definiu. Ele tira dúvidas, qualifica o contato, agenda e passa a conversa para uma pessoa quando precisa.",
+      },
+      {
+        q: "Quanto custa um atendente com IA no WhatsApp?",
+        a: `Na EasyDev, a implantação custa ${brl(price.iaImplantacao)} e o acompanhamento custa ${brl(price.iaMensal)} por mês. O custo das mensagens da API do WhatsApp e do uso do modelo de IA acima da franquia combinada é cobrado à parte.`,
+      },
       {
         q: "E se ele responder errado para o meu cliente?",
         a: "Ele responde só com a base de respostas da sua empresa e dentro do que foi combinado. Não inventa preço, prazo nem orientação técnica: o que estiver fora disso vai para uma pessoa da sua equipe.",
@@ -460,19 +569,24 @@ export const offers: Offer[] = [
     lead: "Automação e sistemas em três passos. O primeiro é um diagnóstico de processo, que mostra onde está o retrabalho e quanto custa resolver cada parte.",
     cardText:
       "Diagnóstico de processo, depois automação pontual ou sistema completo, com suporte mensal.",
-    priceFrom: "R$ 900",
+    priceFrom: brl(price.diagnosticoProcesso),
     priceFromUnit: "pelo diagnóstico de processo",
-    priceFromValue: 900,
+    priceFromValue: price.diagnosticoProcesso,
     metaTitle: "Sistema sob medida e automação para pequenas empresas",
-    metaDescription:
-      "Troque a planilha por sistema: diagnóstico de processo por R$ 900, automações de R$ 1.500 a R$ 6.000 e sistemas de R$ 12.000 a R$ 30.000, com suporte mensal.",
+    metaDescription: `Troque a planilha por sistema: diagnóstico de processo por ${brl(price.diagnosticoProcesso)}, automações de ${brl(price.automacaoMin)} a ${brl(price.automacaoMax)} e sistemas de ${brl(price.sistemaMin)} a ${brl(price.sistemaMax)}, com suporte mensal.`,
     forWho:
       "Distribuidoras, pequenas indústrias e prestadoras de serviço para outras empresas, de 10 a 50 pessoas, com planilhas e sistemas que não conversam.",
+    searchHeading: "Sistemas sob medida e automação de processos para pequenas empresas",
+    definition: `Sob Medida é a oferta de automação e desenvolvimento de sistemas da EasyDev para empresas de 10 a 50 pessoas. Começa por um diagnóstico de processo de ${brl(price.diagnosticoProcesso)}, abatidos se o projeto fechar. Uma automação pontual custa de ${brl(price.automacaoMin)} a ${brl(price.automacaoMax)} e um sistema completo, web ou aplicativo, custa de ${brl(price.sistemaMin)} a ${brl(price.sistemaMax)}.`,
+    leadTime:
+      "Diagnóstico em 1 semana; automação em 1 a 3 semanas; sistema em 6 a 12 semanas",
+    related: ["whatsapp-ia", "sites"],
     plansTitle: "Três passos e o suporte",
     plans: [
       {
         name: "1. Diagnóstico de processo",
-        price: "R$ 900",
+        value: price.diagnosticoProcesso,
+        price: brl(price.diagnosticoProcesso),
         term: "1 semana · valor abatido se o projeto fechar",
         description: "Para saber o que automatizar primeiro, antes de gastar com sistema.",
         includes: [
@@ -484,7 +598,9 @@ export const offers: Offer[] = [
       },
       {
         name: "2. Automação pontual",
-        price: "R$ 1.500 a R$ 6.000",
+        value: price.automacaoMin,
+        maxValue: price.automacaoMax,
+        price: `${brl(price.automacaoMin)} a ${brl(price.automacaoMax)}`,
         term: "1 a 3 semanas",
         description: "Para resolver uma tarefa repetida sem trocar tudo o que você já usa.",
         includes: [
@@ -495,7 +611,9 @@ export const offers: Offer[] = [
       },
       {
         name: "3. Sistema completo",
-        price: "R$ 12.000 a R$ 30.000",
+        value: price.sistemaMin,
+        maxValue: price.sistemaMax,
+        price: `${brl(price.sistemaMin)} a ${brl(price.sistemaMax)}`,
         term: "6 a 12 semanas",
         description: "Para quando a planilha já não dá conta.",
         includes: [
@@ -511,7 +629,9 @@ export const offers: Offer[] = [
       plans: [
         {
           name: "Suporte e evolução",
-          price: "A partir de R$ 600",
+          value: price.suporte,
+          monthly: true,
+          price: `A partir de ${brl(price.suporte)}`,
           unit: "por mês",
           description: "Para o sistema continuar funcionando e crescer com a empresa.",
           includes: ["Correções", "Pequenas melhorias", "Monitoramento"],
@@ -539,12 +659,16 @@ export const offers: Offer[] = [
     ],
     faq: [
       {
-        q: "Por que o diagnóstico de processo é pago?",
-        a: "Porque é uma semana de trabalho e o resultado serve mesmo que você não feche o projeto com a gente. Se fechar, os R$ 900 são abatidos do valor.",
+        q: "Quanto custa um sistema sob medida?",
+        a: `Na EasyDev, um sistema completo, web ou aplicativo, custa de ${brl(price.sistemaMin)} a ${brl(price.sistemaMax)} e leva de 6 a 12 semanas. Uma automação pontual custa de ${brl(price.automacaoMin)} a ${brl(price.automacaoMax)}. O valor exato sai do diagnóstico de processo.`,
       },
       {
-        q: "Como eu sei quanto o sistema vai custar?",
-        a: "O diagnóstico termina com a estimativa de cada automação. O valor do projeto vai fechado na proposta.",
+        q: "Como saber se vale trocar a planilha por um sistema?",
+        a: `É o que o diagnóstico de processo responde. Em uma semana, ele mapeia o processo atual e aponta as 3 automações que mais economizam tempo, com a estimativa de preço e prazo de cada uma. Custa ${brl(price.diagnosticoProcesso)}.`,
+      },
+      {
+        q: "Por que o diagnóstico de processo é pago?",
+        a: `Porque é uma semana de trabalho e o resultado serve mesmo que você não feche o projeto com a gente. Se fechar, os ${brl(price.diagnosticoProcesso)} são abatidos do valor.`,
       },
       {
         q: "Vocês fazem aplicativo para celular?",
@@ -556,7 +680,7 @@ export const offers: Offer[] = [
       },
       {
         q: "E depois que o sistema entra no ar?",
-        a: "Ele sai com um plano de suporte mensal, a partir de R$ 600, para correções, pequenas melhorias e monitoramento.",
+        a: `Ele sai com um plano de suporte mensal, a partir de ${brl(price.suporte)}, para correções, pequenas melhorias e monitoramento.`,
       },
     ],
     whatsappMessage:
@@ -570,19 +694,29 @@ export const offers: Offer[] = [
     lead: "Calendário do mês aprovado de uma vez, posts agendados e comentários respondidos. Funciona melhor junto com o site ou com o atendimento no WhatsApp: é para lá que os posts levam.",
     cardText:
       "8 ou 12 posts por mês com criativo, legenda, agendamento e resposta a comentários.",
-    priceFrom: "R$ 1.200",
+    priceFrom: brl(price.redesEssencial),
     priceFromUnit: "por mês",
-    priceFromValue: 1200,
+    priceFromValue: price.redesEssencial,
     metaTitle: "Gestão de redes sociais para pequenas empresas em BH",
-    metaDescription:
-      "8 ou 12 posts por mês com criativo, legenda, agendamento, resposta a comentários e relatório. A partir de R$ 1.200 por mês, com calendário aprovado de uma vez.",
+    metaDescription: `8 ou 12 posts por mês com criativo, legenda, agendamento, resposta a comentários e relatório. A partir de ${brl(price.redesEssencial)} por mês, com calendário aprovado de uma vez.`,
     forWho:
       "Empresas que já têm para onde levar o cliente, um site ou um WhatsApp bem atendido, e não conseguem manter as redes em dia.",
+    searchHeading: "Gestão de redes sociais para pequenas empresas",
+    definition: `A EasyDev faz a gestão de redes sociais de pequenas empresas em dois planos mensais: o Essencial, com 8 posts por mês, custa ${brl(price.redesEssencial)}; o Completo, com 12 posts, 4 deles Reels, e 8 Stories, custa ${brl(price.redesCompleto)}. Os dois incluem legendas, calendário aprovado de uma vez, agendamento, resposta a comentários em 1 dia útil e relatório mensal.`,
+    leadTime: "Calendário mensal; contrato mínimo de 3 meses",
+    evidence: {
+      text: "O Instagram é canal de vendas de 57% dos pequenos negócios brasileiros.",
+      source: "Sebrae, Pulso dos Pequenos Negócios, 2026",
+      url: "https://agenciasebrae.com.br/dados/whatsapp-se-consolida-nas-vendas-on-line-enquanto-facebook-e-lojas-proprias-perdem-folego/",
+    },
+    related: ["sites", "presenca-local"],
     plansTitle: "Dois planos mensais",
     plans: [
       {
         name: "Essencial",
-        price: "R$ 1.200",
+        value: price.redesEssencial,
+        monthly: true,
+        price: brl(price.redesEssencial),
         unit: "por mês",
         term: "Contrato mínimo de 3 meses",
         description: "Para manter o perfil ativo toda semana.",
@@ -597,7 +731,9 @@ export const offers: Offer[] = [
       },
       {
         name: "Completo",
-        price: "R$ 2.200",
+        value: price.redesCompleto,
+        monthly: true,
+        price: brl(price.redesCompleto),
         unit: "por mês",
         term: "Contrato mínimo de 3 meses",
         description: "O Essencial, com vídeo curto e Stories.",
@@ -634,6 +770,10 @@ export const offers: Offer[] = [
       },
     ],
     faq: [
+      {
+        q: "Quanto custa a gestão de redes sociais?",
+        a: `Na EasyDev, o plano Essencial, com 8 posts por mês, custa ${brl(price.redesEssencial)} por mês. O Completo, com 12 posts, 4 deles Reels, e 8 Stories, custa ${brl(price.redesCompleto)} por mês. O contrato mínimo é de 3 meses e a verba de anúncio é à parte.`,
+      },
       {
         q: "Vocês gravam os vídeos?",
         a: "Não. No plano Completo a gente escreve o roteiro dos Reels; a gravação fica com você.",
@@ -730,8 +870,12 @@ export const reasons = [
 
 export const homeFaq: Faq[] = [
   {
+    q: "O que a EasyDev faz?",
+    a: "A EasyDev Soluções Digitais é uma empresa de tecnologia para pequenas empresas. Faz sites, gestão do Perfil da Empresa no Google, atendimento com inteligência artificial no WhatsApp, gestão de redes sociais e sistemas sob medida, sempre com preço de partida publicado.",
+  },
+  {
     q: "Quanto custa?",
-    a: "Cada serviço tem preço de partida publicado: Presença Local por R$ 490 por mês, landing page por R$ 2.400, atendente no WhatsApp com implantação de R$ 2.500. O valor final vai na proposta, depois do diagnóstico.",
+    a: `Cada serviço tem preço de partida publicado: Presença Local por ${brl(price.presenca)} por mês, landing page por ${brl(price.landing)}, site com páginas de serviço por ${brl(price.site)}, atendente no WhatsApp com implantação de ${brl(price.iaImplantacao)}. O valor final vai na proposta, depois do diagnóstico.`,
   },
   {
     q: "O diagnóstico é gratuito mesmo?",
@@ -739,11 +883,11 @@ export const homeFaq: Faq[] = [
   },
   {
     q: "Em quanto tempo fica pronto?",
-    a: "Perfil no Google arrumado em 5 dias úteis, landing page em 10, atendente no WhatsApp em 15 e site com páginas de serviço em 25 dias úteis.",
+    a: `Perfil no Google arrumado em ${leadTime.presenca}, landing page em ${leadTime.landing}, atendente no WhatsApp em ${leadTime.ia} e site com páginas de serviço em ${leadTime.site}.`,
   },
   {
-    q: "Vocês atendem fora da Grande BH?",
-    a: "Sim, de forma remota, para todo o Brasil. Na Grande BH a conversa também pode ser presencial.",
+    q: "Onde fica a EasyDev e onde ela atende?",
+    a: "A EasyDev fica em Ibirité, na Grande BH, em Minas Gerais. Atende Belo Horizonte, Contagem, Betim e Ibirité, onde a conversa pode ser presencial, e todo o Brasil de forma remota.",
   },
   {
     q: "Vocês usam Wix ou WordPress?",

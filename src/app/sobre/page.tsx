@@ -1,30 +1,26 @@
 import Image from "next/image";
 import About from "@/components/About";
+import CompanyFacts from "@/components/CompanyFacts";
 import Contact from "@/components/Contact";
+import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
 import Partners from "@/components/Partners";
 import Testimonials from "@/components/Testimonials";
 import { site, team } from "@/data/site";
 import { pageMetadata } from "@/lib/metadata";
+import { breadcrumbNode, graph, ORG_ID, webPageNode, type Crumb } from "@/lib/schema";
 
-export const metadata = pageMetadata({
-  title: "Sobre a EasyDev Soluções Digitais",
-  description:
-    "A EasyDev fica em Ibirité, na Grande BH, e faz sites, atendimento no WhatsApp e sistemas sob medida para pequenas e médias empresas. Atende o Brasil todo de forma remota.",
-  path: "/sobre/",
-});
+const title = "Sobre a EasyDev Soluções Digitais";
+const description =
+  "A EasyDev fica em Ibirité, na Grande BH, e faz sites, atendimento no WhatsApp e sistemas sob medida para pequenas e médias empresas. Atende o Brasil todo de forma remota.";
+const path = "/sobre/";
+const crumbs: Crumb[] = [{ name: "Sobre", path }];
+
+export const metadata = pageMetadata({ title, description, path, image: "/og/sobre.png" });
 
 const stats = [
   { value: "100+", label: "projetos entregues" },
   { value: "50+", label: "clientes atendidos" },
-];
-
-const companyData = [
-  { label: "Razão social", value: site.legalName },
-  { label: "CNPJ", value: site.cnpj },
-  { label: "Onde fica", value: `${site.city}, ${site.regionName}` },
-  { label: "Onde atende", value: `${site.serviceArea} e, de forma remota, todo o Brasil` },
-  { label: "Horário", value: site.hours.display },
 ];
 
 export default function SobrePage() {
@@ -32,6 +28,7 @@ export default function SobrePage() {
     <>
       <PageHero
         chip="Sobre"
+        crumbs={crumbs}
         title={["Uma empresa pequena, para empresas ", "pequenas", "."]}
         lead="A EasyDev Soluções Digitais fica em Ibirité, na Grande BH. Faz sites, atendimento no WhatsApp e sistemas sob medida para pequenas e médias empresas, e atende o Brasil todo de forma remota."
         origin="hero-sobre"
@@ -94,35 +91,16 @@ export default function SobrePage() {
       <About />
       <Testimonials />
 
-      <section className="section-padding bg-white" aria-labelledby="dados-empresa">
-        <div className="mx-auto max-w-3xl">
-          <h2 id="dados-empresa" className="mb-8 text-center text-3xl font-bold text-gray-900 lg:text-4xl">
-            Dados da empresa
-          </h2>
-          <dl className="divide-y divide-gray-100 rounded-2xl border border-gray-200 bg-white">
-            {companyData.map((item) => (
-              <div key={item.label} className="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6">
-                <dt className="font-bold text-gray-900">{item.label}</dt>
-                <dd className="text-gray-700">{item.value}</dd>
-              </div>
-            ))}
-            <div className="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6">
-              <dt className="font-bold text-gray-900">Contato</dt>
-              <dd className="space-y-1 text-gray-700">
-                <a href={`tel:${site.phoneE164}`} className="block underline underline-offset-2">
-                  {site.phoneDisplay}
-                </a>
-                <a href={`mailto:${site.email}`} className="block break-all underline underline-offset-2">
-                  {site.email}
-                </a>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </section>
+      <CompanyFacts showLegal />
 
       <Partners />
       <Contact origin="cta-sobre" />
+      <JsonLd
+        data={graph(
+          webPageNode({ path, title, description, type: "AboutPage", mainEntityId: ORG_ID }),
+          breadcrumbNode(path, crumbs)
+        )}
+      />
     </>
   );
 }

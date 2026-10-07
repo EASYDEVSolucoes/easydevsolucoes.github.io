@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import type { Crumb } from "@/lib/schema";
+import Breadcrumb from "./Breadcrumb";
 import Headline from "./Headline";
 import WhatsAppIcon from "./WhatsAppIcon";
 import WhatsAppLink from "./WhatsAppLink";
@@ -7,6 +9,7 @@ import WhatsAppLink from "./WhatsAppLink";
 /** Topo das páginas internas: selo, título com a palavra em dourado, apoio e o CTA. */
 export default function PageHero({
   chip,
+  crumbs,
   title,
   lead,
   note,
@@ -16,6 +19,8 @@ export default function PageHero({
   children,
 }: {
   chip: string;
+  /** Trilha de navegação mostrada acima do selo. */
+  crumbs?: Crumb[];
   title: readonly [string, string, string];
   lead: string;
   /** Linha pequena abaixo dos botões: dado de mercado, condição. */
@@ -38,6 +43,7 @@ export default function PageHero({
         }`}
       >
         <div className={children ? "" : "max-w-3xl"}>
+          {crumbs && <Breadcrumb crumbs={crumbs} />}
           <p className="chip mb-6">{chip}</p>
           <Headline id="titulo-pagina" parts={title} />
           <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-gray-700">{lead}</p>
