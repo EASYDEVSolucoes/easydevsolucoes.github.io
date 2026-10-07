@@ -1,8 +1,10 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import type { Offer } from "@/data/offers";
-import { absoluteUrl, site } from "@/data/site";
+import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/metadata";
+import { breadcrumbNode, graph, serviceNode, webPageNode, type Crumb } from "@/lib/schema";
 import CheckList from "./CheckList";
 import Contact from "./Contact";
 import Faq from "./Faq";
@@ -11,14 +13,17 @@ import OfferIcon from "./OfferIcon";
 import PageHero from "./PageHero";
 import PlanCard from "./PlanCard";
 import Process from "./Process";
+import RelatedOffers from "./RelatedOffers";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
+import Summary from "./Summary";
 
 export function offerMetadata(offer: Offer): Metadata {
   return pageMetadata({
     title: offer.metaTitle,
     description: offer.metaDescription,
     path: `/${offer.slug}/`,
+    image: `/og/${offer.slug}.png`,
   });
 }
 
@@ -29,39 +34,70 @@ const gridCols: Record<number, string> = {
 };
 
 /**
- * Modelo das páginas de oferta. A ordem é sempre a mesma: a dor, o que está
- * incluído e o preço, o que não está, como funciona, perguntas e o CTA.
- * Todo o texto vem de src/data/offers.ts.
+ * Modelo das páginas de oferta. A ordem é sempre a mesma: a dor, o resumo
+ * citável, o que está incluído e o preço, o que não está, como funciona,
+ * perguntas, serviços relacionados e o CTA. Todo o texto vem de src/data/offers.ts.
  */
 export default function OfferPage({ offer, children }: { offer: Offer; children?: ReactNode }) {
-  const url = absoluteUrl(offer.slug);
+  const path = `/${offer.slug}/`;
+  const crumbs: Crumb[] = [{ name: offer.name, path }];
+  // O card do topo mostra o plano de entrada, que é o do preço "a partir de"
+  const mainPlan = offer.plans[0];
 
   return (
     <>
       <PageHero
         chip={offer.name}
+        crumbs={crumbs}
         title={offer.title}
         lead={offer.lead}
-        note={offer.evidence}
         whatsappMessage={offer.whatsappMessage}
         origin={`hero-${offer.slug}`}
       >
-        <aside className="card" aria-label="Resumo da oferta">
+        <aside className="card" aria-label="Preço de partida">
           <span className="icon-block mb-6">
             <OfferIcon name={offer.icon} />
           </span>
           <p className="text-sm font-medium text-gray-700">A partir de</p>
           <p className="font-heading text-4xl font-bold leading-tight text-gray-900">{offer.priceFrom}</p>
           {offer.priceFromUnit && <p className="mt-1 font-medium text-gray-700">{offer.priceFromUnit}</p>}
-          <div className="mt-6 border-t border-gray-100 pt-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-gray-700">Para quem é</h2>
-            <p className="mt-2 leading-relaxed text-gray-700">{offer.forWho}</p>
-          </div>
+          <CheckList items={mainPlan.includes.slice(0, 4)} className="mt-6 border-t border-gray-100 pt-6" />
           <a href="#planos" className="mt-6 font-bold text-primary-text underline underline-offset-4">
-            Ver o que está incluído
+            Ver tudo o que está incluído
           </a>
         </aside>
       </PageHero>
+
+      <Summary
+        heading={offer.searchHeading}
+        definition={offer.definition}
+        evidence={offer.evidence}
+        facts={[
+          {
+            label: "Preço",
+            value: `A partir de ${offer.priceFrom}${offer.priceFromUnit ? ` ${offer.priceFromUnit}` : ""}`,
+          },
+          { label: "Prazo", value: offer.leadTime },
+          { label: "Para quem é", value: offer.forWho },
+          {
+            label: "Onde a EasyDev atende",
+            value: `${site.serviceCities.join(", ")} e, de forma remota, todo o Brasil`,
+          },
+          {
+            label: "Como começar",
+            value: (
+              <>
+                Pelo{" "}
+                <Link href="/diagnostico/" className="font-medium text-primary-text underline underline-offset-2">
+                  diagnóstico gratuito
+                </Link>
+                , de 30 minutos
+              </>
+            ),
+          },
+          { label: "Contato", value: `WhatsApp ${site.phoneDisplay} · ${site.email}` },
+        ]}
+      />
 
       <section id="planos" className="section-padding bg-white" aria-labelledby="planos-titulo">
         <div className="container-page">
@@ -105,31 +141,21 @@ export default function OfferPage({ offer, children }: { offer: Offer; children?
       {children}
 
       <Process steps={offer.steps} />
-      <Faq items={offer.faq} />
+      <Faq items={offer.faq} path={path} />
+      <RelatedOffers slugs={offer.related} />
       <Contact whatsappMessage={offer.whatsappMessage} origin={`cta-${offer.slug}`} />
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Service",
-          "@id": `${url}#servico`,
-          name: offer.name,
-          description: offer.metaDescription,
-          url,
-          provider: { "@id": `${site.url}/#empresa` },
-          areaServed: [...site.serviceCities.map((name) => ({ "@type": "City", name })), { "@type": "Country", name: "Brasil" }],
-          offers: {
-            "@type": "Offer",
-            url,
-            priceCurrency: "BRL",
-            price: offer.priceFromValue,
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "BRL",
-              minPrice: offer.priceFromValue,
-            },
-          },
-        }}
+        data={graph(
+          webPageNode({
+            path,
+            title: offer.metaTitle,
+            description: offer.metaDescription,
+            mainEntityId: `${site.url}${path}#servico`,
+          }),
+          breadcrumbNode(path, crumbs),
+          serviceNode(offer)
+        )}
       />
     </>
   );

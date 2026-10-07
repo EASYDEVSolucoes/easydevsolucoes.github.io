@@ -42,12 +42,15 @@ npm run dev
 
 | Quero mudar | Arquivo |
 | --- | --- |
-| Preços, prazos, escopo e perguntas frequentes de cada oferta | `src/data/offers.ts` |
+| Preços (um lugar só: o objeto `price`) | `src/data/offers.ts` |
+| Prazos, escopo, definições e perguntas frequentes de cada oferta | `src/data/offers.ts` |
 | Telefone, WhatsApp, e-mail, horário, redes sociais, CNPJ, parceiros, sócios e depoimentos | `src/data/site.ts` |
-| Resumo para assistentes de IA (repete os preços em texto) | `public/llms.txt` |
+| Data de "atualizado em" das páginas e do sitemap | `lastUpdated` em `src/data/site.ts` |
 | Cores e fontes do design system | `tailwind.config.js` e `src/app/globals.css` |
 
-As páginas de oferta (`/presenca-local`, `/sites`, `/whatsapp-ia`, `/sob-medida`, `/redes-sociais`) usam o mesmo modelo, `src/components/OfferPage.tsx`, e leem o conteúdo de `src/data/offers.ts`. A página `/precos`, o sitemap e os dados estruturados saem do mesmo arquivo.
+As páginas de oferta (`/presenca-local`, `/sites`, `/whatsapp-ia`, `/sob-medida`, `/redes-sociais`) usam o mesmo modelo, `src/components/OfferPage.tsx`, e leem o conteúdo de `src/data/offers.ts`. A página `/precos`, o sitemap, os dados estruturados, o `/llms.txt` e o `/llms-full.txt` saem do mesmo arquivo: nenhum deles é editado à mão.
+
+Depois de publicar mudança de conteúdo, rode `yarn indexnow` para avisar o Bing. A lista completa do que fazer no Search Console e no Bing está em `docs/seo/05-pos-publicacao.md`.
 
 Regras que o site segue:
 

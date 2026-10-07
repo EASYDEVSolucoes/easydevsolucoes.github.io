@@ -1,6 +1,6 @@
 # Documentação de SEO - EasyDev Soluções
 
-**Última atualização:** Janeiro 2026
+**Última atualização:** Outubro 2026
 
 ---
 
@@ -18,6 +18,7 @@ Esta documentação contém guias completos e atualizados para otimização de S
 | 02 | [Bing Webmaster Tools](./02-bing-webmaster-tools.md) | Configuração do Bing e IndexNow | Iniciante |
 | 03 | [Google Meu Negócio](./03-google-meu-negocio.md) | SEO local e presença no Maps | Iniciante |
 | 04 | [Monitoramento SEO](./04-monitoramento-seo.md) | Métricas, ferramentas e estratégias | Intermediário |
+| 05 | [Depois de publicar](./05-pos-publicacao.md) | Lista do que fazer no Search Console, no Bing e no Google após cada publicação | Iniciante |
 
 ---
 
@@ -67,9 +68,12 @@ Esta documentação contém guias completos e atualizados para otimização de S
 
 | Arquivo | Localização | Descrição |
 |---------|-------------|-----------|
-| robots.txt | `/public/robots.txt` | Regras para crawlers |
-| sitemap.xml | `/public/sitemap.xml` | Mapa do site |
-| llms.txt | `/public/llms.txt` | Info para LLMs/AI |
+| robots.txt | `/src/app/robots.ts` | Regras para buscadores e rastreadores de IA (gerado no build) |
+| sitemap.xml | `/src/app/sitemap.ts` | Mapa do site, gerado do catálogo |
+| llms.txt e llms-full.txt | `/src/lib/llms.ts` | Resumo e conteúdo completo para assistentes de IA, gerados do catálogo |
+| Dados estruturados | `/src/lib/schema.ts` | WebPage, trilha, Service e ofertas de cada página |
+| Catálogo | `/src/data/offers.ts` | Preços, prazos, definições e perguntas de cada oferta |
+| IndexNow | `/scripts/indexnow.mjs` | Avisa o Bing das páginas alteradas (`yarn indexnow`) |
 | layout.tsx | `/src/app/layout.tsx` | Meta tags e Schema.org |
 
 ---
@@ -77,9 +81,9 @@ Esta documentação contém guias completos e atualizados para otimização de S
 ## Próximas Ações
 
 ### Prioridade Alta
-1. [ ] Configurar Bing Webmaster Tools e obter código real de verificação
+1. [ ] Conferir o site no Bing Webmaster Tools e enviar o sitemap (ver 05)
 2. [ ] Criar e verificar Google Business Profile
-3. [ ] Implementar IndexNow para atualizações instantâneas
+3. [x] IndexNow implementado: rodar `yarn indexnow` depois de cada publicação
 
 ### Prioridade Média
 4. [ ] Solicitar avaliações de clientes no Google

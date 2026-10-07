@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import type { Faq as FaqItem } from "@/data/offers";
+import { absoluteUrl } from "@/data/site";
 import JsonLd from "./JsonLd";
 import SectionHeading from "./SectionHeading";
 
@@ -9,9 +10,12 @@ import SectionHeading from "./SectionHeading";
  */
 export default function Faq({
   items,
+  path,
   title = "Perguntas frequentes",
 }: {
   items: readonly FaqItem[];
+  /** Rota da página, por exemplo "/sites/", para identificar o bloco nos dados estruturados. */
+  path: string;
   title?: string;
 }) {
   return (
@@ -37,6 +41,8 @@ export default function Faq({
         data={{
           "@context": "https://schema.org",
           "@type": "FAQPage",
+          "@id": `${absoluteUrl(path)}#perguntas`,
+          inLanguage: "pt-BR",
           mainEntity: items.map((item) => ({
             "@type": "Question",
             name: item.q,

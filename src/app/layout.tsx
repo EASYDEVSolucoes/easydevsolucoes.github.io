@@ -12,8 +12,9 @@ import Navbar from "@/components/Navbar";
 import ScrollProgress from "@/components/ScrollProgress";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { diagnostico, offers } from "@/data/offers";
-import { absoluteUrl, site } from "@/data/site";
+import { absoluteUrl, companyDefinition, expertise, site } from "@/data/site";
 import { ogImage } from "@/lib/metadata";
+import { ORG_ID, SITE_ID } from "@/lib/schema";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
@@ -82,7 +83,7 @@ export const viewport: Viewport = {
 const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": `${site.url}/#empresa`,
+  "@id": ORG_ID,
   name: site.fullName,
   alternateName: site.name,
   legalName: site.legalName,
@@ -90,7 +91,9 @@ const organization = {
   url: site.url,
   logo: `${site.url}/company/logoEasyDev.png`,
   image: `${site.url}${ogImage.url}`,
-  description: site.description,
+  description: companyDefinition,
+  slogan: site.tagline,
+  knowsAbout: expertise,
   telephone: site.phoneE164,
   email: site.email,
   priceRange: "$$",
@@ -158,11 +161,13 @@ const organization = {
 const website = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${site.url}/#site`,
+  "@id": SITE_ID,
   url: site.url,
   name: site.fullName,
+  alternateName: site.name,
+  description: site.description,
   inLanguage: "pt-BR",
-  publisher: { "@id": `${site.url}/#empresa` },
+  publisher: { "@id": ORG_ID },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
